@@ -17,7 +17,7 @@ Stock media stands in for the business's own photos until they supply them. It i
 4. Avoid visible brand names, vehicle signage, and identifiable faces. A stranger's face next to "our team" is a false claim.
 5. Use media generously and large. A bold page needs a strong hero image or video and enough supporting photographs to carry its scenes: typically five to eight. Choose high resolution and show them big, full-bleed or close to it. Small thumbnails in boxes waste a good photograph.
 6. Check the licence. Some results are paid or members-only images (on Unsplash these are served from a different host than `images.unsplash.com`, or have `premium` in the file name). Do not use them. Do not use 3D renders or illustrations where a photo of real work is meant.
-7. Look for a hero video. A short, silent, looping clip of the work, the material or the place does more for a first impression than any still. Search Pexels for one that fits; if none is good enough, use a photograph.
+7. Look for a hero video. A short, silent, looping clip of the work, the material or the place does more for a first impression than any still. Search Pexels for one that fits; if none is good enough, use a photograph. A full-screen video must be at least 1280 px wide (prefer 1920), and its poster must be a sharp image at 1600 px or wider: a soft, low-resolution hero undoes everything else. Keep the file under about 8 MB.
 
 ## The verification rule
 

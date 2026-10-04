@@ -47,6 +47,7 @@ Use the level agreed in the direction.
 - Set `will-change` on elements that move during scroll, and only on those.
 - Travel far enough to be seen: a headline line rises its full height, an image wipes fully open, a pinned image goes from framed to full screen. Timid movement of a few pixels is worse than none.
 - Every entrance plays once.
+- Anything shown on hover has a resting state. A photo panel that changes as the pointer moves over a list shows the first item's photo before any hover, and on touch screens. An empty box waiting for a pointer is a bug.
 - Use real content inside the motion. A marquee carries the business's own words. A pinned scene tells something true about the business. Never animate filler.
 
 ## Limits that do not move

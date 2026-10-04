@@ -73,6 +73,7 @@ Whichever signature you choose:
 - **Backgrounds have atmosphere.** A photograph, a colour field, a gradient with grain, a texture, a large cropped letterform. Flat white or flat grey from top to bottom is a missed chance.
 - **Every section has a different shape.** If two sections in a row could swap places unnoticed, redesign one.
 - **There are three or more moments.** Places where something happens that the visitor did not expect: the opening sequence, a scene in the middle of the page, the way the page ends. Name them before building.
+- **Colour comes from the idea, not from habit.** The safe bold choice is a dark page with an orange accent and a condensed heavy sans-serif; it is now as common as the purple gradient was. Use it only when the idea calls for exactly that. Otherwise find the colour in the business: its materials, its place, its light.
 - **Typefaces are chosen.** Never fall back to the fonts every generated page uses: no Inter, Roboto, Arial, Open Sans or system defaults for headings. Look for a display face with real character.
 
 ## Keep it honest and usable
