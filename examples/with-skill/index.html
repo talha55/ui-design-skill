@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tidewell Plumbing and Gas | Brackenford</title>
+<meta name="description" content="Tidewell Plumbing and Gas in Brackenford: blocked drains, hot water systems, gas fitting, leak detection, bathroom renovations and emergency call-outs. Call 0400 000 000 or request a quote.">
+<meta name="theme-color" content="#0C3B42">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          page:    '#F2F6F5', // background
+          surface: '#FFFFFF', // cards, form
+          ink:     '#0B2227', // text, footer
+          muted:   '#4B6469', // secondary text, field borders
+          line:    '#D2DEDC', // hairlines
+          tide:    '#0C3B42', // dominant: hero, contact band, headings
+          tidesoft:'#E1EEEC', // tint of the dominant for quiet panels
+          tidetext:'#B9D3D0', // secondary text on tide
+          copper:  '#F0A03C', // accent: call and quote buttons only
+          alarm:   '#A32A1F'  // form error text
+        },
+        fontFamily: {
+          display: ['Archivo', 'Arial Narrow', 'Arial', 'sans-serif'],
+          sans: ['"Public Sans"', 'system-ui', 'Segoe UI', 'Arial', 'sans-serif']
+        },
+        boxShadow: {
+          soft: '0 8px 24px rgba(12, 59, 66, 0.12)'
+        }
+      }
+    }
+  };
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { font-family: 'Public Sans', system-ui, 'Segoe UI', Arial, sans-serif; background: #F2F6F5; color: #0B2227; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, .font-display { font-family: Archivo, 'Arial Narrow', Arial, sans-serif; font-weight: 700; letter-spacing: -0.02em; }
+  h1, h2 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+
+  :focus-visible { outline: 3px solid #0C3B42; outline-offset: 3px; border-radius: 4px; }
+  .on-dark :focus-visible { outline-color: #F0A03C; }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 48px; padding: 12px 24px; border-radius: 8px; font-weight: 700; font-size: 18px; line-height: 1.2; text-decoration: none; transition: background-color .16s ease, color .16s ease, border-color .16s ease, transform .16s ease; }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary { background: #F0A03C; color: #0B2227; }
+  .btn-primary:hover { background: #FFB75E; }
+  .btn-quiet { border: 2px solid #B9D3D0; color: #FFFFFF; }
+  .btn-quiet:hover { background: #FFFFFF; color: #0C3B42; border-color: #FFFFFF; }
+  .btn .arrow { transition: transform .16s ease; }
+  .btn:hover .arrow { transform: translateX(4px); }
+
+  .textlink { color: #0C3B42; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
+  .textlink:hover { color: #0B2227; text-decoration-thickness: 3px; }
+  .on-dark .textlink { color: #FFFFFF; }
+
+  .navlink { color: #FFFFFF; text-decoration: none; padding: 12px 0; border-bottom: 2px solid transparent; transition: border-color .16s ease; }
+  .navlink:hover { border-bottom-color: #F0A03C; }
+
+  .field { width: 100%; min-height: 48px; padding: 12px; border: 1px solid #4B6469; border-radius: 8px; background: #FFFFFF; color: #0B2227; font: inherit; transition: border-color .16s ease, box-shadow .16s ease; }
+  .field:hover { border-color: #0B2227; }
+  .field:focus-visible { outline: 3px solid #0C3B42; outline-offset: 2px; }
+  .field[aria-invalid="true"] { border-color: #A32A1F; border-width: 2px; }
+  .field::placeholder { color: #4B6469; opacity: 1; }
+  textarea.field { min-height: 120px; resize: vertical; }
+
+  .placeholder-note { border: 2px dashed #4B6469; border-radius: 8px; padding: 12px 16px; font-size: 14px; color: #4B6469; background: transparent; }
+  .on-dark .placeholder-note { border-color: #B9D3D0; color: #B9D3D0; }
+
+  .photo { background: #E1EEEC; }
+</style>
+</head>
+
+<body>
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-copper focus:text-ink focus:px-4 focus:py-3 focus:rounded-lg font-bold">Skip to content</a>
+
+<!-- ============ Header ============ -->
+<header class="bg-tide text-white on-dark sticky top-0 z-40 border-b border-white/10">
+  <div class="mx-auto max-w-[1200px] px-4 md:px-6 h-16 flex items-center justify-between gap-4">
+    <a href="#top" class="flex flex-col leading-none no-underline text-white" aria-label="Tidewell Plumbing and Gas, back to top">
+      <!-- Text wordmark stands in until a logo is supplied -->
+      <span class="font-display text-2xl">Tidewell</span>
+      <span class="text-sm text-tidetext mt-1">Plumbing and Gas</span>
+    </a>
+    <nav aria-label="Main" class="hidden md:flex items-center gap-8 text-base">
+      <a class="navlink" href="#services">Services</a>
+      <a class="navlink" href="#area">Area and hours</a>
+      <a class="navlink" href="#quote">Request a quote</a>
+    </nav>
+    <a href="tel:0400000000" class="btn btn-primary !min-h-[44px] !py-2 !px-4 !text-base !gap-2">
+      <i data-lucide="phone" aria-hidden="true" class="w-5 h-5"></i>
+      <span><span class="sr-only">Call Tidewell on </span>0400 000 000</span>
+    </a>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============ Hero ============ -->
+<section id="top" class="bg-tide text-white on-dark relative overflow-hidden">
+  <div class="mx-auto max-w-[1200px] px-4 md:px-6 pt-12 pb-12 lg:pt-24 lg:pb-24">
+    <div class="lg:w-[56%]">
+      <p class="text-base text-tidetext font-semibold mb-4">Brackenford and nearby suburbs</p>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl leading-[1.08]">Plumbing and gas for Brackenford homes and small businesses.</h1>
+      <p class="mt-6 text-lg md:text-xl text-tidetext max-w-[34rem]">Blocked drains, hot water, gas fitting, leaks and bathrooms. Burst pipe at midnight? We take emergency call-outs at any time.</p>
+      <div class="mt-8 flex flex-col sm:flex-row gap-4">
+        <a href="tel:0400000000" class="btn btn-primary">
+          <i data-lucide="phone" aria-hidden="true" class="w-6 h-6"></i>
+          <span>Call 0400 000 000</span>
+        </a>
+        <a href="#quote" class="btn btn-quiet">
+          <span>Request a quote</span>
+          <i data-lucide="arrow-right" aria-hidden="true" class="w-6 h-6 arrow"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Photo: runs to the right edge on wide screens, sits under the text on phones -->
+  <div class="photo relative lg:absolute lg:inset-y-0 lg:right-0 lg:w-[38%] aspect-[4/3] lg:aspect-auto">
+    <!-- Photo: Unsplash (free licence). Stock image standing in for Tidewell's own work photos. -->
+    <img src="https://images.unsplash.com/photo-1676210134190-3f2c0d5cf58d?w=1600&q=80&auto=format&fit=crop"
+         alt="Hands tightening a waste pipe fitting under a kitchen sink"
+         width="1600" height="1200"
+         class="w-full h-full object-cover object-[28%_50%]"
+         fetchpriority="high">
+    <div class="absolute inset-0 bg-tide/20" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- ============ Facts strip ============ -->
+<section aria-label="Hours and area" class="bg-page border-b border-line">
+  <div class="mx-auto max-w-[1200px] px-4 md:px-6">
+    <dl class="grid grid-cols-1 md:grid-cols-3 md:divide-x divide-line">
+      <div class="py-6 md:pr-8" data-reveal>
+        <dt class="text-sm font-semibold text-muted">Open</dt>
+        <dd class="font-display text-2xl mt-1 text-tide">Monday to Saturday</dd>
+      </div>
+      <div class="py-6 md:px-8 border-t border-line md:border-t-0" data-reveal>
+        <dt class="text-sm font-semibold text-muted">Emergency call-outs</dt>
+        <dd class="font-display text-2xl mt-1 text-tide">At any time</dd>
+      </div>
+      <div class="py-6 md:pl-8 border-t border-line md:border-t-0" data-reveal>
+        <dt class="text-sm font-semibold text-muted">Where we work</dt>
+        <dd class="font-display text-2xl mt-1 text-tide">Brackenford and nearby suburbs</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ Services ============ -->
+<section id="services" class="bg-page scroll-mt-16">
+  <div class="mx-auto max-w-[1200px] px-4 md:px-6 py-16 lg:py-24 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+
+    <div class="lg:col-span-5" data-reveal>
+      <h2 class="text-3xl md:text-4xl lg:text-5xl leading-[1.1] text-tide">What you can call us for</h2>
+      <p class="mt-4 text-lg text-muted max-w-[28rem]">Houses and small commercial premises, from a dripping tap to a full bathroom.</p>
+
+      <div class="mt-8 lg:mt-12 bg-tide text-white on-dark rounded-2xl p-6 md:p-8">
+        <h3 class="text-2xl">Emergency call-outs</h3>
+        <p class="mt-2 text-lg text-tidetext">Burst pipe, flooding, no water. Call, whatever the hour.</p>
+        <p class="mt-4 text-base text-white"><span class="font-semibold">Smell gas?</span> Get everyone outside first, then call.</p>
+        <a href="tel:0400000000" class="btn btn-primary mt-6 w-full sm:w-auto">
+          <i data-lucide="phone" aria-hidden="true" class="w-6 h-6"></i>
+          <span>Call 0400 000 000</span>
+        </a>
+      </div>
+    </div>
+
+    <ol class="lg:col-span-7 lg:col-start-6 border-b border-line self-start">
+      <li class="grid grid-cols-[48px_1fr] md:grid-cols-[64px_1fr] gap-x-4 py-8 border-t border-line" data-reveal>
+        <span class="font-display text-xl text-muted" aria-hidden="true">01</span>
+        <div>
+          <h3 class="text-2xl md:text-3xl text-tide">Blocked drains</h3>
+          <p class="mt-2 text-lg text-muted max-w-[34rem]">Slow or blocked sinks, showers, toilets and floor drains.</p>
+        </div>
+      </li>
+      <li class="grid grid-cols-[48px_1fr] md:grid-cols-[64px_1fr] gap-x-4 py-8 border-t border-line" data-reveal>
+        <span class="font-display text-xl text-muted" aria-hidden="true">02</span>
+        <div>
+          <h3 class="text-2xl md:text-3xl text-tide">Hot water systems</h3>
+          <p class="mt-2 text-lg text-muted max-w-[34rem]">No hot water, a leaking unit, or a system that needs replacing.</p>
+        </div>
+      </li>
+      <li class="grid grid-cols-[48px_1fr] md:grid-cols-[64px_1fr] gap-x-4 py-8 border-t border-line" data-reveal>
+        <span class="font-display text-xl text-muted" aria-hidden="true">03</span>
+        <div>
+          <h3 class="text-2xl md:text-3xl text-tide">Gas fitting</h3>
+          <p class="mt-2 text-lg text-muted max-w-[34rem]">Gas appliances, connections and pipework for homes and small businesses.</p>
+        </div>
+      </li>
+      <li class="grid grid-cols-[48px_1fr] md:grid-cols-[64px_1fr] gap-x-4 py-8 border-t border-line" data-reveal>
+        <span class="font-display text-xl text-muted" aria-hidden="true">04</span>
+        <div>
+          <h3 class="text-2xl md:text-3xl text-tide">Leak detection</h3>
+          <p class="mt-2 text-lg text-muted max-w-[34rem]">Tracing the source of a leak, a damp patch or a wet spot you cannot explain.</p>
+        </div>
+      </li>
+      <li class="grid grid-cols-[48px_1fr] md:grid-cols-[64px_1fr] gap-x-4 py-8 border-t border-line" data-reveal>
+        <span class="font-display text-xl text-muted" aria-hidden="true">05</span>
+        <div>
+          <h3 class="text-2xl md:text-3xl text-tide">Bathroom renovations</h3>
+          <p class="mt-2 text-lg text-muted max-w-[34rem]">The plumbing side of a bathroom renovation, from the pipework in the wall to the new fixtures.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ About: owner-operated ============ -->
+<section id="about" class="bg-tidesoft">
+  <div class="grid grid-cols-1 lg:grid-cols-12">
+    <div class="photo lg:col-span-5 aspect-[4/3] lg:aspect-auto lg:min-h-[560px] relative">
+      <!-- Photo: Unsplash (free licence). Stock image of a plumbing rough-in, standing in for Tidewell's own work photos. -->
+      <img src="https://images.unsplash.com/photo-1768321916212-17ae334a3d63?w=1000&q=80&auto=format&fit=crop"
+           alt="Copper and insulated pipework roughed in between timber framing against an exposed brick wall"
+           width="1000" height="1333"
+           loading="lazy"
+           class="absolute inset-0 w-full h-full object-cover object-[50%_60%]">
+    </div>
+    <div class="lg:col-span-7 px-4 md:px-6 py-16 lg:py-24 lg:pl-16 lg:pr-[max(24px,calc((100vw_-_1200px)/2))]">
+      <div class="max-w-[36rem]" data-reveal>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl leading-[1.1] text-tide">A small business, run by its owner.</h2>
+        <p class="mt-4 text-lg text-muted">Tidewell is owner-operated, with two vans on the road. We work in homes and in small commercial premises.</p>
+        <dl class="mt-8 border-t border-tide/20">
+          <div class="grid grid-cols-1 sm:grid-cols-[176px_1fr] gap-x-6 py-4 border-b border-tide/20">
+            <dt class="font-display text-xl text-tide">Owner-operated</dt>
+            <dd class="text-lg text-muted">One business, one owner, one phone number.</dd>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-[176px_1fr] gap-x-6 py-4 border-b border-tide/20">
+            <dt class="font-display text-xl text-tide">Two vans</dt>
+            <dd class="text-lg text-muted">Two vehicles covering Brackenford and nearby suburbs.</dd>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-[176px_1fr] gap-x-6 py-4 border-b border-tide/20">
+            <dt class="font-display text-xl text-tide">Homes and business</dt>
+            <dd class="text-lg text-muted">Residential work and small commercial jobs.</dd>
+          </div>
+        </dl>
+        <a href="tel:0400000000" class="btn btn-primary mt-8 w-full sm:w-auto">
+          <i data-lucide="phone" aria-hidden="true" class="w-6 h-6"></i>
+          <span>Call 0400 000 000</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Area and hours ============ -->
+<section id="area" class="bg-page scroll-mt-16">
+  <div class="mx-auto max-w-[1200px] px-4 md:px-6 py-16 lg:py-24 grid grid-cols-1 lg:grid-cols-12 gap-12">
+    <div class="lg:col-span-5" data-reveal>
+      <h2 class="text-3xl md:text-4xl lg:text-5xl leading-[1.1] text-tide">Where and when</h2>
+      <p class="mt-4 text-lg text-muted max-w-[28rem]">Not sure whether your street is covered? Call and ask.</p>
+    </div>
+
+    <div class="lg:col-span-6 lg:col-start-7 grid gap-8" data-reveal>
+      <div>
+        <h3 class="text-xl text-tide">Service area</h3>
+        <p class="mt-2 text-lg">Brackenford and nearby suburbs.</p>
+        <p class="placeholder-note mt-4">To be supplied: the list of suburbs Tidewell covers.</p>
+      </div>
+      <div>
+        <h3 class="text-xl text-tide">Hours</h3>
+        <table class="mt-2 w-full text-lg">
+          <caption class="sr-only">Opening days</caption>
+          <tbody>
+            <tr class="border-t border-line"><th scope="row" class="text-left font-semibold py-4 pr-4">Monday to Saturday</th><td class="py-4">Open</td></tr>
+            <tr class="border-t border-b border-line"><th scope="row" class="text-left font-semibold py-4 pr-4">Emergency call-outs</th><td class="py-4">At any time</td></tr>
+          </tbody>
+        </table>
+        <p class="placeholder-note mt-4">To be supplied: opening and closing times for Monday to Saturday.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Quote / contact ============ -->
+<section id="quote" class="bg-tide text-white on-dark scroll-mt-16">
+  <div class="mx-auto max-w-[1200px] px-4 md:px-6 py-16 lg:py-24 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+
+    <div class="lg:col-span-5" data-reveal>
+      <h2 class="text-3xl md:text-4xl lg:text-5xl leading-[1.1]">Call now, or send us the job.</h2>
+      <p class="mt-4 text-lg text-tidetext max-w-[28rem]">For anything urgent, ring. For a quote, tell us what needs doing.</p>
+
+      <a href="tel:0400000000" class="mt-8 flex items-center gap-4 no-underline text-white group min-h-[48px]">
+        <i data-lucide="phone" aria-hidden="true" class="w-8 h-8 shrink-0"></i>
+        <span class="font-display text-3xl md:text-4xl underline decoration-2 underline-offset-8 decoration-tidetext group-hover:decoration-white">0400 000 000</span>
+      </a>
+      <a href="mailto:hello@tidewell.example" class="mt-4 flex items-center gap-4 no-underline text-white group min-h-[44px]">
+        <i data-lucide="mail" aria-hidden="true" class="w-6 h-6 shrink-0"></i>
+        <span class="text-lg md:text-xl underline decoration-2 underline-offset-4 decoration-tidetext group-hover:decoration-white break-all">hello@tidewell.example</span>
+      </a>
+      <p class="mt-8 text-base text-tidetext">Monday to Saturday. Emergency call-outs at any time.</p>
+    </div>
+
+    <div class="lg:col-span-7" data-reveal>
+      <form id="quote-form" novalidate class="bg-surface text-ink rounded-2xl p-6 md:p-8 shadow-soft grid gap-6" aria-labelledby="form-title">
+        <h3 id="form-title" class="text-2xl text-tide">Request a quote</h3>
+
+        <div class="grid sm:grid-cols-2 gap-6">
+          <div>
+            <label for="f-name" class="block font-semibold mb-2">Your name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required class="field" aria-describedby="err-name">
+            <p id="err-name" class="text-sm text-alarm mt-2" role="alert" hidden></p>
+          </div>
+          <div>
+            <label for="f-phone" class="block font-semibold mb-2">Phone number</label>
+            <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required class="field" aria-describedby="err-phone">
+            <p id="err-phone" class="text-sm text-alarm mt-2" role="alert" hidden></p>
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-6">
+          <div>
+            <label for="f-suburb" class="block font-semibold mb-2">Suburb</label>
+            <input id="f-suburb" name="suburb" type="text" autocomplete="address-level2" class="field">
+          </div>
+          <div>
+            <label for="f-job" class="block font-semibold mb-2">What do you need?</label>
+            <select id="f-job" name="job" class="field">
+              <option>Blocked drain</option>
+              <option>Hot water system</option>
+              <option>Gas fitting</option>
+              <option>Leak detection</option>
+              <option>Bathroom renovation</option>
+              <option>Emergency call-out</option>
+              <option>Something else</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="f-details" class="block font-semibold mb-2">About the job</label>
+          <textarea id="f-details" name="details" class="field"></textarea>
+        </div>
+
+        <div>
+          <button type="submit" class="btn btn-primary w-full sm:w-auto">
+            <span>Request a quote</span>
+            <i data-lucide="arrow-right" aria-hidden="true" class="w-6 h-6 arrow"></i>
+          </button>
+          <p class="text-base text-muted mt-4 max-w-[34rem]">This opens your email app with the details filled in, addressed to hello@tidewell.example. If you would rather talk, call 0400 000 000.</p>
+          <p id="form-status" class="text-base font-semibold text-tide mt-4" role="status" hidden></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ Footer ============ -->
+<footer class="bg-ink text-white on-dark">
+  <div class="mx-auto max-w-[1200px] px-4 md:px-6 py-12 grid grid-cols-1 md:grid-cols-12 gap-8">
+    <div class="md:col-span-5">
+      <p class="font-display text-2xl">Tidewell</p>
+      <p class="text-base text-tidetext">Plumbing and Gas, Brackenford</p>
+    </div>
+    <div class="md:col-span-4 text-base">
+      <p><a class="textlink inline-block py-3" href="tel:0400000000">0400 000 000</a></p>
+      <p><a class="textlink break-all inline-block py-3" href="mailto:hello@tidewell.example">hello@tidewell.example</a></p>
+      <p class="mt-4 text-tidetext">Monday to Saturday. Emergency call-outs at any time.</p>
+      <p class="text-tidetext">Brackenford and nearby suburbs.</p>
+    </div>
+    <div class="md:col-span-3">
+      <p class="placeholder-note">To be supplied: licence details.</p>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <p class="mx-auto max-w-[1200px] px-4 md:px-6 py-4 text-sm text-tidetext">Photos are stock images standing in for Tidewell's own work.</p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>lucide.createIcons({ attrs: { 'stroke-width': 1.75 } });</script>
+
+<script>
+  // Quote form: validates, then opens the visitor's email app with the details filled in.
+  (function () {
+    var form = document.getElementById('quote-form');
+    var status = document.getElementById('form-status');
+    function setError(id, input, msg) {
+      var el = document.getElementById(id);
+      if (msg) { el.textContent = msg; el.hidden = false; input.setAttribute('aria-invalid', 'true'); }
+      else { el.textContent = ''; el.hidden = true; input.removeAttribute('aria-invalid'); }
+    }
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = form.elements.name, phone = form.elements.phone;
+      var okName = name.value.trim().length > 0;
+      var okPhone = phone.value.replace(/\D/g, '').length >= 8;
+      setError('err-name', name, okName ? '' : 'Please enter your name so we know who to ask for.');
+      setError('err-phone', phone, okPhone ? '' : 'Please enter a phone number with at least 8 digits.');
+      if (!okName) { name.focus(); return; }
+      if (!okPhone) { phone.focus(); return; }
+      var lines = [
+        'Name: ' + name.value.trim(),
+        'Phone: ' + phone.value.trim(),
+        'Suburb: ' + form.elements.suburb.value.trim(),
+        'Job: ' + form.elements.job.value,
+        '',
+        form.elements.details.value.trim()
+      ];
+      var href = 'mailto:hello@tidewell.example?subject=' + encodeURIComponent('Quote request: ' + form.elements.job.value) +
+                 '&body=' + encodeURIComponent(lines.join('\n'));
+      status.textContent = 'Your email app should open with your details ready to send. If it does not, call 0400 000 000 or email hello@tidewell.example.';
+      status.hidden = false;
+      window.location.href = href;
+    });
+  })();
+</script>
+
+<script type="module">
+  // Motion level: medium. Hover and press feedback live in CSS; each section's content fades and rises in once.
+  import { animate, inView } from "https://cdn.jsdelivr.net/npm/motion@latest/+esm";
+
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!reduce) {
+    const items = document.querySelectorAll("[data-reveal]");
+    // Hidden start state is set here, not in CSS, so a failed script never leaves the page blank.
+    items.forEach((el) => { el.style.opacity = "0"; });
+    inView("[data-reveal]", (element) => {
+      animate(element, { opacity: [0, 1], transform: ["translateY(16px)", "translateY(0px)"] }, { duration: 0.5, ease: "easeOut" });
+    }, { amount: 0.2 });
+  }
+</script>
+</body>
+</html>
