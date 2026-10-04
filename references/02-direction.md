@@ -7,7 +7,7 @@ Before building, show the person what you intend to build, in a form they can ju
 Keep it short. Use exactly these parts:
 
 - **Style:** one sentence in plain words.
-- **Palette:** each colour with its hex value and its role. Example: `#12314F` navy, headings and footer. `#F26A1B` orange, call button only.
+- **Palette:** each colour with its hex value and its role. Give the role in a few words, such as "headings and footer" or "primary button only".
 - **Type:** the heading face and the text face, and where they come from.
 - **Sections:** the ordered list of sections, one line each, saying what each one is for.
 - **Photos:** the mood in one line. Example: "Real working scenes, hands and tools, daylight, no posed models."

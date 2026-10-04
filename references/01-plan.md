@@ -29,7 +29,9 @@ Cut any section you cannot fill with real content. Five strong sections beat nin
 
 ## Style
 
-Choose a style that fits the trade and the visitor, and name it in one sentence a client would understand: "Solid and practical, like a well-kept van: dark navy, plenty of white, one warm accent."
+Choose a style that fits the trade and the visitor, and name it in one sentence a client would understand. Derive it from this business: its materials, its setting, its customers, how it wants to be seen. Two businesses in the same trade should not end up with the same sentence. Do not reuse a phrase from this file; the examples here show the form, not the answer.
+
+The form: "[character in two or three plain words], like [something concrete from the business's world]: [dominant colour], [how much space], [the accent and what it is for]."
 
 Take the style from the business, not from what is fashionable:
 
@@ -51,7 +53,7 @@ Take the style from the business, not from what is fashionable:
 
 - Two typefaces at most: one with character for headings, one plain and readable for text. One family for both is fine when it has enough weights.
 - Choose the heading face for the business's character: a sturdy grotesque for a trade, a serif for a practice or a restaurant, a geometric sans for a product.
-- Avoid the faces every generated page uses by default unless the brand supplies them.
+- Avoid the faces every generated page uses by default unless the brand supplies them. Look through the catalogue for a face that suits this business instead of reaching for the first one that comes to mind; if you have used a face on a previous page, that is a reason to look again, not a reason to reuse it.
 - Limit weights to three: regular, medium or semibold, and bold.
 
 ## When a brand is supplied
