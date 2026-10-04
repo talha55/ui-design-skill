@@ -1,4 +1,6 @@
-# With and without the skill
+# With and without the skill (version 1.0)
+
+This test was run on version 1.0, the first, restrained version of the skill. Version 1.1 aims much higher by default; see the [showcase](showcase) for what it produces. The results below still describe version 1.0 accurately, and the rules they measured (verified media, one icon family, nothing invented) are unchanged in 1.1.
 
 The same brief, built six times: three times with no skill and three times with UI Design Skill. This page says exactly how the test was run and what it showed, including where the skill made no difference.
 

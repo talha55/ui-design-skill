@@ -1,0 +1,933 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Northline Strength | Strength and conditioning gym in Halden</title>
+<meta name="description" content="Coached small-group classes (eight people at most), open gym sessions and one-to-one coaching at Unit 4, 18 Foundry Road, Halden. Barbells, kettlebells, sleds and rigs. No machines, no mirrors. Book a free first session.">
+<meta name="theme-color" content="#0E1113">
+
+<!-- Decided before first paint: if motion is allowed, hidden starting states are applied by CSS class "pre".
+     A failsafe removes the class if the animation script does not start, so content is never stuck hidden. -->
+<script>
+  (function () {
+    var d = document.documentElement;
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      d.classList.add("pre");
+      setTimeout(function () { d.classList.remove("pre"); }, 3000);
+    }
+  })();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/lenis@1/dist/lenis.css">
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+  /* ------------------------------------------------------------------
+     Tokens. Every colour on the page is one of these.
+     ------------------------------------------------------------------ */
+  :root {
+    --iron: #0E1113;        /* page background, headings on chalk, text on accent */
+    --iron-2: #161A1D;      /* raised surfaces, inputs */
+    --iron-3: #22282C;      /* barbell plates */
+    --line: #2C3338;        /* one-pixel borders on iron */
+    --chalk: #ECE9E1;       /* text on iron, the paper chapter */
+    --chalk-line: #CBC7BB;  /* borders on chalk */
+    --mute: #A3A8A6;        /* secondary text on iron (7:1) */
+    --mute-ink: #4F5355;    /* secondary text on chalk (6:1) */
+    --accent: #FF5A1F;      /* the primary action, the north line, the strike. Nothing else. */
+
+    --display: "Big Shoulders Display", "Arial Narrow", sans-serif;
+    --text: "Instrument Sans", system-ui, sans-serif;
+
+    --gutter: clamp(24px, 5vw, 64px);
+    --r-s: 4px;
+    --r-l: 16px;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { background: var(--iron); -webkit-text-size-adjust: 100%; overflow-x: clip; }
+  body {
+    margin: 0; background: var(--iron); color: var(--chalk);
+    font-family: var(--text); font-size: 17px; line-height: 1.6; font-weight: 400;
+    overflow-x: clip;
+  }
+  img, video { display: block; max-width: 100%; }
+  h1, h2, h3, p, ul { margin: 0; padding: 0; }
+  ul { list-style: none; }
+  a { color: inherit; text-decoration: none; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .on-accent :focus-visible, .book :focus-visible { outline-color: var(--iron); }
+  .book form :focus-visible { outline-color: var(--accent); }
+  .on-chalk :focus-visible { outline-color: var(--iron); }
+
+  /* Fine grain over the whole page: the atmosphere */
+  body::after {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .wrap { padding-inline: var(--gutter); }
+  .kicker { font-size: 14px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mute); }
+  .on-chalk .kicker { color: var(--mute-ink); }
+  .display { font-family: var(--display); font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.88; }
+
+  /* Headline lines that rise from behind a mask */
+  .line { display: block; overflow: hidden; padding: 0.05em 0 0.08em; margin: -0.05em 0 -0.08em; }
+  .line > span { display: block; will-change: transform; }
+  .pre [data-rise] .line > span { transform: translateY(110%); }
+  .pre [data-load] { opacity: 0; }
+
+  /* ------------------------------------------------------------------
+     The north line: a fixed vertical rule that fills as you scroll
+     ------------------------------------------------------------------ */
+  .north { position: fixed; top: 0; bottom: 0; left: calc(var(--gutter) / 2 - 1px); width: 2px; z-index: 60; pointer-events: none; }
+  .north-track { position: absolute; inset: 0; background: rgba(163, 168, 166, 0.22); transform-origin: 50% 0; }
+  .north-fill { position: absolute; inset: 0; background: var(--accent); transform-origin: 50% 0; transform: scaleY(0); }
+  .north-n { position: absolute; top: 76px; left: 8px; font-size: 11px; font-weight: 600; letter-spacing: 0.2em; color: var(--mute); writing-mode: vertical-rl; text-transform: uppercase; }
+  @media (max-width: 767px) { .north-n { display: none; } }
+
+  /* ------------------------------------------------------------------
+     Buttons and links
+     ------------------------------------------------------------------ */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+    min-height: 52px; padding: 12px 24px; border-radius: var(--r-s);
+    font-weight: 600; font-size: 16px; line-height: 1.2; cursor: pointer; border: 1px solid transparent;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s var(--ease);
+    will-change: transform;
+  }
+  .btn svg { width: 20px; height: 20px; transition: transform 0.25s var(--ease); }
+  .btn:hover svg { transform: translateX(4px); }
+  .btn-primary { background: var(--accent); color: var(--iron); }
+  .btn-primary:hover { background: #FF7440; }
+  .btn-primary:active { background: #E84B12; }
+  .btn-ghost { border-color: rgba(236, 233, 225, 0.45); color: var(--chalk); }
+  .btn-ghost:hover { border-color: var(--chalk); background: rgba(236, 233, 225, 0.08); }
+  .btn-line { border-color: currentColor; }
+  .btn-line:hover { background: var(--iron); color: var(--chalk); }
+  .btn-sm { min-height: 44px; padding: 8px 16px; font-size: 15px; }
+
+  .link {
+    display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-weight: 600;
+    background: linear-gradient(currentColor, currentColor) 0 calc(100% - 10px) / 0 2px no-repeat;
+    transition: background-size 0.35s var(--ease);
+  }
+  .link svg { width: 20px; height: 20px; transition: transform 0.25s var(--ease); }
+  .link:hover, .link:focus-visible { background-size: calc(100% - 28px) 2px; }
+  .link:hover svg { transform: translateX(4px); }
+
+  /* ------------------------------------------------------------------
+     Header
+     ------------------------------------------------------------------ */
+  .header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 70; height: 64px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding-inline: var(--gutter); border-bottom: 1px solid transparent;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  .header.is-solid { background: rgba(14, 17, 19, 0.96); border-bottom-color: var(--line); }
+  .wordmark { font-family: var(--display); font-weight: 900; font-size: 26px; letter-spacing: 0.02em; line-height: 1; text-transform: uppercase; display: flex; align-items: baseline; gap: 8px; min-height: 44px; align-items: center; }
+  .wordmark small { display: none; font-family: var(--text); font-size: 11px; font-weight: 600; letter-spacing: 0.22em; color: var(--mute); }
+  @media (min-width: 560px) { .wordmark small { display: inline; } }
+  .nav { display: none; gap: 32px; }
+  .nav a { font-size: 15px; font-weight: 600; min-height: 44px; display: inline-flex; align-items: center; background: linear-gradient(currentColor, currentColor) 0 calc(100% - 8px) / 0 2px no-repeat; transition: background-size 0.35s var(--ease); }
+  .nav a:hover, .nav a:focus-visible { background-size: 100% 2px; }
+  .header-actions { display: flex; align-items: center; gap: 8px; }
+  .menu-btn { width: 44px; height: 44px; display: inline-grid; place-items: center; background: none; border: 1px solid var(--line); border-radius: var(--r-s); cursor: pointer; }
+  .menu-btn svg { width: 20px; height: 20px; }
+  .lg-only { display: none; }
+  @media (min-width: 900px) {
+    .nav { display: flex; }
+    .menu-btn, .sm-only { display: none; }
+    .lg-only { display: inline; }
+  }
+
+  .menu {
+    position: fixed; inset: 0; z-index: 80; background: var(--iron); padding: 96px var(--gutter) 32px;
+    display: none; flex-direction: column; justify-content: space-between;
+  }
+  .menu.is-open { display: flex; }
+  .menu a.m-link { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(3rem, 14vw, 5rem); line-height: 1; padding: 8px 0; display: block; border-bottom: 1px solid var(--line); }
+  .menu-close { position: absolute; top: 10px; right: var(--gutter); }
+
+  /* ------------------------------------------------------------------
+     Hero: the statement
+     ------------------------------------------------------------------ */
+  .hero { position: relative; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding-top: 96px; padding-bottom: calc(24px + 5vw); background: var(--iron); isolation: isolate; }
+  .hero-media { position: absolute; inset: 0; z-index: -1; overflow: hidden; background: var(--iron-2); }
+  .hero-media img, .hero-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.1) brightness(0.8); }
+  .hero-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14,17,19,0.7) 0%, rgba(14,17,19,0.25) 35%, rgba(14,17,19,0.55) 70%, rgba(14,17,19,0.96) 100%); }
+  .hero .eyebrow { margin-bottom: 24px; color: var(--chalk); }
+  .hero-title { font-size: clamp(3.25rem, min(18vw, 18vh), 16rem); margin-bottom: 24px; }
+  .hero-title .line:last-child { color: var(--accent); }
+  @media (max-width: 767px) { .hero-title { font-size: 15.2vw; } }
+  .hero-foot { display: grid; gap: 24px; align-items: end; border-top: 1px solid rgba(236,233,225,0.28); padding-top: 24px; }
+  .hero-lede { max-width: 38ch; font-size: 18px; color: var(--chalk); }
+  .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+  .hero-meta { font-size: 15px; display: grid; gap: 4px; color: var(--chalk); }
+  .hero-meta a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-weight: 600; font-size: 20px; }
+  .hero-meta svg { width: 20px; height: 20px; }
+  @media (min-width: 900px) {
+    .hero-foot { grid-template-columns: 1.4fr 1fr; }
+    .hero-meta { justify-self: end; text-align: right; }
+    .hero-meta a { justify-content: flex-end; }
+  }
+  @media (prefers-reduced-motion: reduce) { .hero-media video { display: none; } }
+
+  /* ------------------------------------------------------------------
+     Marquee band: the kit list, set at a slant across the seam
+     ------------------------------------------------------------------ */
+  .band-wrap { position: relative; z-index: 5; margin-top: -4vw; padding-block: 4vw; overflow: hidden; pointer-events: none; }
+  .band { position: relative; margin: 0 -3%; transform: rotate(-1.6deg); pointer-events: auto; background: var(--chalk); color: var(--iron); border-block: 2px solid var(--iron); overflow: hidden; white-space: nowrap; }
+  .band-row { display: flex; width: max-content; }
+  .band-strip { display: inline-flex; align-items: center; gap: 32px; padding: 16px 32px 12px 0; will-change: transform; }
+  .band-strip span { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(2.5rem, 7vw, 6rem); line-height: 1; letter-spacing: -0.01em; }
+  .band-strip i { width: 0.9em; height: 0.9em; flex: none; border-radius: 50%; border: 6px solid var(--iron); font-size: clamp(2.5rem, 7vw, 6rem); width: clamp(28px, 4.4vw, 60px); height: clamp(28px, 4.4vw, 60px); }
+  .band-strip .no { color: transparent; -webkit-text-stroke: 2px var(--iron); }
+  @media (prefers-reduced-motion: reduce) { .band { transform: none; margin: 0; overflow-x: auto; } .band-wrap { margin-top: 0; padding-block: 0; } }
+
+  /* ------------------------------------------------------------------
+     Centrepiece: the bar loads, eight places
+     ------------------------------------------------------------------ */
+  .scene { position: relative; background: var(--iron); }
+  .scene .stage { position: relative; min-height: 100vh; min-height: 100svh; overflow: hidden; padding: 128px var(--gutter) 32px; }
+  .scene-label { position: relative; z-index: 3; }
+  .caps { position: relative; z-index: 3; margin-top: 16px; }
+  .caps li { font-family: var(--display); font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.9; font-size: clamp(2.5rem, 6vw, 5.5rem); }
+  .scene-num {
+    position: absolute; left: 50%; top: 64%; z-index: 0; transform: translate(-50%, -50%);
+    font-family: var(--display); font-weight: 900; line-height: 0.75;
+    font-size: clamp(16rem, min(60vw, 92vh), 70rem);
+    color: transparent; -webkit-text-stroke: 2px rgba(236, 233, 225, 0.3);
+    transition: color 0.5s var(--ease), -webkit-text-stroke-color 0.5s;
+    user-select: none;
+  }
+  .scene-num.is-full { color: rgba(236, 233, 225, 0.07); -webkit-text-stroke-color: var(--chalk); }
+  .scene-count { position: absolute; right: var(--gutter); top: 96px; z-index: 3; text-align: right; font-size: 14px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mute); }
+  .scene-count b { display: block; font-family: var(--display); font-size: 48px; line-height: 1; letter-spacing: 0; color: var(--chalk); font-weight: 900; }
+
+  .rig { --u: min(1vw, 1.35vh); --k: 1; position: absolute; left: 0; right: 0; top: 64%; z-index: 1; }
+  .bar { position: absolute; left: 0; right: 0; height: clamp(8px, 1.1vw, 16px); transform: translateY(-50%); background: linear-gradient(180deg, #7b8387, #dadddd 45%, #6a7276); }
+  .stack { position: absolute; top: 0; transform: translateY(-50%); display: flex; align-items: center; gap: 3px; z-index: 2; }
+  .stack.l { left: 8vw; flex-direction: row-reverse; }
+  .stack.r { right: 8vw; }
+  .plate {
+    width: clamp(16px, calc(var(--u) * 3.4 * var(--k)), 52px); height: calc(var(--ph) * var(--u) * var(--k));
+    background: var(--iron-3); border: 2px solid var(--chalk); border-radius: 8px; position: relative; will-change: transform;
+  }
+  .plate::after { content: ""; position: absolute; left: 50%; top: 50%; width: 38%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; background: var(--iron); border: 2px solid var(--mute); }
+  .plate.eighth { background: var(--accent); border-color: var(--chalk); }
+  @media (max-width: 767px) { .scene-count { display: none; } .rig { --k: 1.8; } .stack.l { left: 5vw; } .stack.r { right: 5vw; } .scene-num { top: 62%; } .rig { top: 62%; } }
+
+  .scene.is-pinned { height: 320vh; }
+  .scene.is-pinned .stage { position: sticky; top: 0; height: 100vh; height: 100svh; min-height: 0; }
+  .scene.is-pinned .caps { height: clamp(3rem, 9vw, 9rem); }
+  .scene.is-pinned .caps li { position: absolute; left: 0; top: 0; font-size: clamp(3.25rem, 11vw, 11rem); white-space: nowrap; }
+  @media (max-width: 767px) { .scene.is-pinned { height: 240vh; } .scene.is-pinned .caps li { font-size: clamp(3rem, 15vw, 5rem); } }
+
+  /* ------------------------------------------------------------------
+     Three ways to train
+     ------------------------------------------------------------------ */
+  .ways { padding-block: 96px 64px; background: var(--iron); }
+  .ways-head { display: grid; gap: 16px; margin-bottom: 64px; }
+  .ways-head h2 { font-size: clamp(3rem, 9vw, 9rem); }
+  .svc { display: grid; gap: 16px; padding-block: 32px; border-top: 1px solid var(--line); transition: background-color 0.3s; position: relative; }
+  .svc:last-of-type { border-bottom: 1px solid var(--line); }
+  .svc-n { font-weight: 600; letter-spacing: 0.16em; color: var(--mute); font-size: 14px; }
+  .svc-t { font-family: var(--display); font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.9; font-size: clamp(2.75rem, 7.4vw, 7.5rem); transition: transform 0.5s var(--ease), color 0.3s; }
+  .svc-t small { display: block; margin-top: 12px; font-family: var(--text); font-size: 14px; letter-spacing: 0.16em; font-weight: 600; color: var(--accent); }
+  .svc-d { max-width: 44ch; color: var(--mute); }
+  .svc-d p { color: var(--chalk); margin-bottom: 8px; }
+  .svc-img { overflow: hidden; background: var(--iron-2); aspect-ratio: 16 / 10; }
+  .svc-img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.08); will-change: transform, clip-path; }
+  @media (min-width: 900px) {
+    .svc { grid-template-columns: 48px 1.5fr 1fr 22vw; align-items: center; gap: 32px; }
+    .svc:hover { background: var(--iron-2); }
+    .svc:hover .svc-t { transform: translateX(16px); }
+    .svc-img { aspect-ratio: 4 / 3; }
+  }
+
+  /* ------------------------------------------------------------------
+     The floor: the chalk chapter
+     ------------------------------------------------------------------ */
+  .floor { background: var(--chalk); color: var(--iron); padding-block: 96px 64px; position: relative; overflow: hidden; }
+  .floor-grid { display: grid; gap: 64px; }
+  .floor-h { font-size: clamp(3rem, 9vw, 9rem); margin-block: 16px 32px; }
+  .gear li { display: flex; align-items: baseline; gap: 16px; border-top: 2px solid var(--iron); padding-block: 8px 4px; position: relative; font-family: var(--display); font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.95; font-size: clamp(3rem, 8.4vw, 8.4rem); }
+  .gear li:last-child { border-bottom: 2px solid var(--iron); }
+  .gear li em { font-style: normal; font-family: var(--text); font-size: 14px; letter-spacing: 0.16em; font-weight: 600; color: var(--mute-ink); min-width: 28px; }
+  .gear.off { margin-top: 0; }
+  .gear.off li { border-color: var(--chalk-line); color: var(--mute-ink); }
+  .gear.off li span { position: relative; display: inline-block; }
+  .strike { position: absolute; left: -2%; right: -2%; top: 52%; height: clamp(6px, 0.9vw, 12px); background: var(--accent); transform-origin: 0 50%; }
+  .floor-h.off { margin-top: 64px; }
+  .floor-photos { position: relative; display: grid; gap: 16px; }
+  .photo { overflow: hidden; background: var(--chalk-line); }
+  .photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.08); will-change: transform, clip-path; }
+  .photo-a { aspect-ratio: 4 / 5; }
+  .photo-b { aspect-ratio: 3 / 2; }
+  .photo-c { aspect-ratio: 1 / 1; }
+  .parallax { position: relative; overflow: hidden; }
+  .parallax > img { position: absolute; inset: -15% 0; width: 100%; height: 130%; object-fit: cover; }
+  .note { margin-top: 32px; font-size: 14px; color: var(--mute-ink); max-width: 60ch; }
+  @media (min-width: 900px) {
+    .floor-grid { grid-template-columns: 1.35fr 1fr; gap: 48px; align-items: start; }
+    .floor-photos { margin-top: 96px; margin-right: calc(var(--gutter) * -1); }
+    .photo-a { width: 100%; }
+    .photo-b { width: 70%; margin-top: -64px; margin-left: -22%; border: 8px solid var(--chalk); box-sizing: content-box; position: relative; z-index: 2; }
+    .photo-c { width: 54%; margin-left: auto; margin-top: -48px; margin-right: var(--gutter); }
+  }
+
+  /* ------------------------------------------------------------------
+     Timetable: a horizontal run of times
+     ------------------------------------------------------------------ */
+  .gallery { background: var(--iron); position: relative; }
+  .gallery .stage { position: relative; padding-block: 96px; }
+  .track { display: flex; width: max-content; min-width: 100%; }
+  .gallery:not(.is-pinned) .stage { overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 64px; }
+  .panel {
+    flex: 0 0 min(80vw, 360px); min-height: 380px; padding: 24px; border-left: 1px solid var(--line);
+    display: flex; flex-direction: column; justify-content: space-between; gap: 32px; scroll-snap-align: start;
+    transition: background-color 0.3s;
+  }
+  .panel:hover { background: var(--iron-2); }
+  .panel .day { display: flex; justify-content: space-between; gap: 16px; font-size: 14px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mute); }
+  .time { font-family: var(--display); font-weight: 900; line-height: 0.8; letter-spacing: -0.03em; font-size: clamp(6rem, 12vw, 13rem); white-space: nowrap; }
+  .time sup { font-family: var(--text); font-size: 15px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; vertical-align: top; margin-left: 8px; position: relative; top: 0.4em; color: var(--accent); }
+  .panel.intro { flex-basis: min(88vw, 520px); border-left: 0; padding-left: var(--gutter); }
+  .panel.intro h2 { font-size: clamp(3.25rem, 7.5vw, 8rem); }
+  .panel.intro p { max-width: 30ch; color: var(--mute); }
+  .panel.sat { background: var(--chalk); color: var(--iron); border-left-color: var(--chalk); }
+  .panel.sat:hover { background: #F6F4EE; }
+  .panel.sat .day { color: var(--mute-ink); }
+  .panel.sat .time sup { color: var(--iron); }
+  .panel.sat :focus-visible { outline-color: var(--iron); }
+  .panel.photo-panel { padding: 0; flex-basis: min(70vw, 320px); position: relative; }
+  .panel.photo-panel img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.08); }
+  .panel.end { flex-basis: min(88vw, 560px); padding-right: var(--gutter); }
+  .panel.end h2 { font-size: clamp(3rem, 6.5vw, 7rem); }
+  .swipe-hint { padding: 0 var(--gutter) 16px; font-size: 14px; color: var(--mute); }
+  .gprog { position: absolute; left: var(--gutter); right: var(--gutter); bottom: 32px; height: 2px; background: var(--line); display: none; }
+  .gprog i { position: absolute; inset: 0; background: var(--accent); transform-origin: 0 50%; transform: scaleX(0); }
+  @media (min-width: 768px) {
+    .panel { flex-basis: clamp(340px, 30vw, 480px); min-height: 0; height: min(68vh, 600px); }
+    .panel.intro { flex-basis: clamp(420px, 38vw, 620px); }
+    .panel.photo-panel { flex-basis: clamp(260px, 24vw, 400px); }
+    .panel.end { flex-basis: clamp(460px, 40vw, 640px); }
+    .swipe-hint { display: none; }
+    .gallery.is-pinned .stage { position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; align-items: center; padding-block: 0; }
+    .gallery.is-pinned .track { will-change: transform; }
+    .gallery.is-pinned .gprog { display: block; }
+  }
+
+  /* ------------------------------------------------------------------
+     Book: the ending
+     ------------------------------------------------------------------ */
+  .book { background: var(--accent); color: var(--iron); position: relative; overflow: hidden; padding-top: 96px; }
+  .book-title { font-size: clamp(3.25rem, min(15vw, 28vh), 15rem); margin-block: 16px 64px; }
+  .book .kicker { color: var(--iron); }
+  .book-grid { display: grid; gap: 48px; padding-bottom: 96px; }
+  .form { background: var(--iron); color: var(--chalk); border-radius: var(--r-l); padding: 24px; display: grid; gap: 16px; align-content: start; }
+  .form h3 { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: 32px; line-height: 1; letter-spacing: -0.01em; }
+  .field { display: grid; gap: 4px; }
+  .field label { font-size: 14px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute); }
+  .field input, .field select { width: 100%; min-height: 52px; padding: 12px 16px; background: var(--iron-2); border: 1px solid #4A5359; border-radius: var(--r-s); color: var(--chalk); appearance: none; -webkit-appearance: none; }
+  .field input::placeholder { color: #8A908E; }
+  .field input:focus, .field select:focus { border-color: var(--accent); }
+  .field .sel { position: relative; }
+  .field .sel svg { position: absolute; right: 16px; top: 50%; width: 20px; height: 20px; transform: translateY(-50%); pointer-events: none; color: var(--mute); }
+  .field input:user-invalid { border-color: var(--accent); }
+  .form-note { font-size: 15px; color: var(--mute); }
+  .form-status { font-size: 15px; font-weight: 600; min-height: 24px; color: var(--chalk); }
+  .info { display: grid; gap: 24px; align-content: start; }
+  .addr { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(2.25rem, 5vw, 4rem); line-height: 0.95; letter-spacing: -0.01em; }
+  .contact-list { display: grid; gap: 4px; }
+  .contact-list a { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font-size: 20px; font-weight: 600; width: fit-content; background: linear-gradient(currentColor, currentColor) 0 calc(100% - 8px) / 0 2px no-repeat; transition: background-size 0.35s var(--ease); }
+  .contact-list a:hover, .contact-list a:focus-visible { background-size: 100% 2px; }
+  .contact-list svg { width: 20px; height: 20px; flex: none; }
+  .times { border-top: 2px solid var(--iron); padding-top: 16px; display: grid; gap: 4px; font-size: 18px; }
+  .times b { font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; font-size: 14px; }
+  @media (min-width: 900px) {
+    .book-grid { grid-template-columns: 1.05fr 1fr; gap: 64px; align-items: start; }
+    .form { padding: 32px; }
+  }
+
+  .bigmark { overflow: hidden; height: clamp(5rem, 17.5vw, 20rem); margin-top: 0; }
+  .bigmark span { display: block; font-family: var(--display); font-weight: 900; text-transform: uppercase; letter-spacing: -0.03em; line-height: 0.8; font-size: clamp(6rem, 24.5vw, 28rem); white-space: nowrap; margin-left: -0.02em; padding-left: var(--gutter); will-change: transform; }
+  .foot { background: var(--iron); color: var(--mute); padding: 24px var(--gutter); display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; font-size: 14px; }
+  .foot a { color: var(--chalk); }
+
+  /* Placeholder block, clearly labelled */
+  .ph { border: 2px dashed currentColor; border-radius: var(--r-s); padding: 16px; font-size: 14px; }
+</style>
+</head>
+
+<body>
+<a href="#book" class="sr-only">Skip to booking</a>
+
+<!-- North line -->
+<div class="north" aria-hidden="true">
+  <div class="north-track" data-north-track></div>
+  <div class="north-fill" data-north-fill></div>
+  <span class="north-n">North</span>
+</div>
+
+<!-- Header -->
+<header class="header" id="header">
+  <a href="#top" class="wordmark" aria-label="Northline Strength, back to top">Northline <small>Strength</small></a>
+  <nav class="nav" aria-label="Main">
+    <a href="#classes">Ways to train</a>
+    <a href="#floor">The floor</a>
+    <a href="#timetable">Class times</a>
+    <a href="#book">Visit</a>
+  </nav>
+  <div class="header-actions">
+    <a class="btn btn-primary btn-sm" href="#book"><span class="lg-only">Book a free session</span><span class="sm-only">Book free</span></a>
+    <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu" data-menu-open><i data-lucide="menu" aria-hidden="true"></i></button>
+  </div>
+</header>
+
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu" data-menu>
+  <button class="menu-btn menu-close" type="button" aria-label="Close menu" data-menu-close><i data-lucide="x" aria-hidden="true"></i></button>
+  <nav aria-label="Menu links">
+    <a class="m-link" href="#classes">Ways to train</a>
+    <a class="m-link" href="#floor">The floor</a>
+    <a class="m-link" href="#timetable">Class times</a>
+    <a class="m-link" href="#book">Visit</a>
+  </nav>
+  <div>
+    <a class="btn btn-primary" href="#book" style="width:100%">Book your free first session</a>
+    <p style="margin-top:16px"><a class="link" href="tel:0400222333"><i data-lucide="phone" aria-hidden="true"></i>0400 222 333</a></p>
+  </div>
+</div>
+
+<main id="top">
+
+  <!-- 1. HERO -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-media" aria-hidden="true">
+      <!-- Poster / fallback: Unsplash, chalked hands (black and white) -->
+      <img src="https://images.unsplash.com/photo-1740389790146-be99a9a2d7e1?w=1600&q=55&auto=format&fit=crop" alt="" width="1800" height="1200" fetchpriority="high">
+      <!-- Pexels, cottonbro studio: hands chalking up and gripping a bar -->
+      <video autoplay muted loop playsinline preload="auto" poster="https://images.unsplash.com/photo-1740389790146-be99a9a2d7e1?w=1600&q=55&auto=format&fit=crop" data-hero-video>
+        <source src="https://videos.pexels.com/video-files/7674510/7674510-hd_1366_720_25fps.mp4" type="video/mp4">
+      </video>
+      <div class="hero-shade"></div>
+    </div>
+
+    <div class="wrap">
+      <p class="kicker eyebrow" data-load>Strength and conditioning gym &middot; Halden</p>
+      <h1 class="display hero-title" id="hero-title" data-rise data-first>
+        <span class="line"><span>No mirrors.</span></span>
+        <span class="line"><span>No machines.</span></span>
+        <span class="line"><span>Just iron.</span></span>
+      </h1>
+      <div class="hero-foot">
+        <div>
+          <p class="hero-lede" data-load>Coached small-group classes, open gym sessions and one-to-one coaching at Northline Strength. Barbells, kettlebells, sleds and rigs.</p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="#book" data-magnetic>Book your free first session <i data-lucide="arrow-right" aria-hidden="true"></i></a>
+            <a class="btn btn-ghost" href="#timetable">See class times</a>
+          </div>
+        </div>
+        <div class="hero-meta" data-load>
+          <span>Unit 4, 18 Foundry Road, Halden</span>
+          <a href="tel:0400222333"><i data-lucide="phone" aria-hidden="true"></i>0400 222 333</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. KIT BAND -->
+  <div class="band-wrap">
+  <div class="band" role="img" aria-label="Barbells, kettlebells, sleds, rigs. No machines. No mirrors.">
+    <div class="band-row" data-marquee>
+      <div class="band-strip" aria-hidden="true">
+        <span>Barbells</span><i></i><span>Kettlebells</span><i></i><span>Sleds</span><i></i><span>Rigs</span><i></i><span class="no">No machines</span><i></i><span class="no">No mirrors</span><i></i>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- 3. CENTREPIECE: the bar loads -->
+  <section class="scene" data-scene aria-label="Classes hold eight people at most">
+    <div class="stage">
+      <p class="kicker scene-label">Coached small-group classes</p>
+      <ul class="caps" data-caps>
+        <li data-cap>Coached.</li>
+        <li data-cap>Small groups.</li>
+        <li data-cap>Eight at most.</li>
+      </ul>
+      <p class="scene-count" aria-hidden="true">Places filled<b><span data-count>8</span> / 8</b></p>
+      <div class="scene-num" data-num aria-hidden="true">8</div>
+      <div class="rig" aria-hidden="true">
+        <div class="bar"></div>
+        <div class="stack l">
+          <div class="plate" style="--ph:28" data-plate data-side="l"></div>
+          <div class="plate" style="--ph:23" data-plate data-side="l"></div>
+          <div class="plate" style="--ph:18" data-plate data-side="l"></div>
+          <div class="plate" style="--ph:13" data-plate data-side="l"></div>
+        </div>
+        <div class="stack r">
+          <div class="plate" style="--ph:28" data-plate data-side="r"></div>
+          <div class="plate" style="--ph:23" data-plate data-side="r"></div>
+          <div class="plate" style="--ph:18" data-plate data-side="r"></div>
+          <div class="plate eighth" style="--ph:13" data-plate data-side="r"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. WAYS TO TRAIN -->
+  <section class="ways" id="classes" aria-labelledby="ways-title">
+    <div class="wrap">
+      <div class="ways-head">
+        <p class="kicker">How you train</p>
+        <h2 class="display" id="ways-title" data-rise><span class="line"><span>Three ways</span></span><span class="line"><span>to train.</span></span></h2>
+      </div>
+
+      <article class="svc">
+        <span class="svc-n">01</span>
+        <h3 class="svc-t">Small-group classes<small>Eight people at most</small></h3>
+        <div class="svc-d">
+          <p>Coached classes on weekdays and Saturday, with a maximum of eight people in every one.</p>
+          <a class="link" href="#timetable">See class times <i data-lucide="arrow-right" aria-hidden="true"></i></a>
+        </div>
+        <div class="svc-img" data-reveal-img>
+          <!-- Unsplash: chalk dust between two hands -->
+          <img src="https://images.unsplash.com/photo-1672983513236-d1df0f263dfd?w=1000&q=75&auto=format&fit=crop" alt="Two hands clapping together with chalk dust in the air (stock photo)" width="1000" height="750" loading="lazy">
+        </div>
+      </article>
+
+      <article class="svc">
+        <span class="svc-n">02</span>
+        <h3 class="svc-t">Open gym</h3>
+        <div class="svc-d">
+          <p>Open gym sessions: come in and train on the floor, with the barbells, kettlebells, sleds and rigs.</p>
+          <a class="link" href="#book">Ask about times <i data-lucide="arrow-right" aria-hidden="true"></i></a>
+        </div>
+        <div class="svc-img" data-reveal-img>
+          <!-- Unsplash: lifter at the bar, cropped below the face -->
+          <img src="https://images.unsplash.com/photo-1517963879433-6ad2b056d712?w=1000&q=75&auto=format&fit=crop" alt="A lifter gripping a loaded barbell on a rubber gym floor, cropped below the face (stock photo)" width="1000" height="750" loading="lazy">
+        </div>
+      </article>
+
+      <article class="svc">
+        <span class="svc-n">03</span>
+        <h3 class="svc-t">One-to-one coaching</h3>
+        <div class="svc-d">
+          <p>One person, one coach. Get in touch to talk about what you want to work on.</p>
+          <a class="link" href="#book">Get in touch <i data-lucide="arrow-right" aria-hidden="true"></i></a>
+        </div>
+        <div class="svc-img" data-reveal-img>
+          <!-- Unsplash: barbell resting on the gym floor -->
+          <img src="https://images.unsplash.com/photo-1620188526357-ff08e03da266?w=1000&q=75&auto=format&fit=crop" alt="A loaded barbell resting on a dark gym floor (stock photo)" width="1000" height="750" loading="lazy">
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 5. THE FLOOR (chalk chapter) -->
+  <section class="floor on-chalk" id="floor" aria-labelledby="floor-title">
+    <div class="wrap">
+      <div class="floor-grid">
+        <div>
+          <p class="kicker">The floor</p>
+          <h2 class="display floor-h" id="floor-title" data-rise><span class="line"><span>On the floor.</span></span></h2>
+          <ul class="gear">
+            <li><em>01</em>Barbells</li>
+            <li><em>02</em>Kettlebells</li>
+            <li><em>03</em>Sleds</li>
+            <li><em>04</em>Rigs</li>
+          </ul>
+          <h2 class="display floor-h off" data-rise><span class="line"><span>Not on it.</span></span></h2>
+          <ul class="gear off">
+            <li><em>&times;</em><span>Machines<i class="strike" data-strike></i></span></li>
+            <li><em>&times;</em><span>Mirrors<i class="strike" data-strike></i></span></li>
+          </ul>
+          <p class="note">The photographs on this page are stock images standing in for the gym until Northline Strength supplies its own. They do not show the Foundry Road floor.</p>
+        </div>
+
+        <div class="floor-photos">
+          <div class="photo photo-a parallax" data-parallax>
+            <!-- Unsplash: empty gym with power racks and a barbell, black and white -->
+            <img src="https://images.unsplash.com/photo-1784798228092-659924b1a15b?w=1200&q=75&auto=format&fit=crop" alt="Power racks and a barbell on a bare gym floor, in black and white (stock photo)" width="1200" height="1500" loading="lazy" style="object-position: 72% 50%">
+          </div>
+          <div class="photo photo-b" data-reveal-img>
+            <!-- Unsplash: row of kettlebells, black and white -->
+            <img src="https://images.unsplash.com/photo-1632077804406-188472f1a810?w=1000&q=75&auto=format&fit=crop" alt="A row of black kettlebells on a gym floor (stock photo)" width="1000" height="667" loading="lazy">
+          </div>
+          <div class="photo photo-c" data-reveal-img>
+            <!-- Unsplash: stacked iron weight plates -->
+            <img src="https://images.unsplash.com/photo-1689514226761-336eaf77e311?w=900&q=75&auto=format&fit=crop" alt="A stack of cast-iron weight plates (stock photo)" width="900" height="900" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. TIMETABLE (horizontal run) -->
+  <section class="gallery" id="timetable" data-gallery aria-labelledby="tt-title">
+    <div class="stage">
+      <div class="track" data-track>
+
+        <div class="panel intro">
+          <div>
+            <p class="kicker">Class times</p>
+            <h2 class="display" id="tt-title" data-rise><span class="line"><span>Pick</span></span><span class="line"><span>your hour.</span></span></h2>
+          </div>
+          <p>Classes run on weekdays and on Saturday. Eight places in each. Choose a time and book your free first session.</p>
+        </div>
+
+        <div class="panel">
+          <div class="day"><span>Weekdays</span><span>Class</span></div>
+          <div class="time">6:00<sup>am</sup></div>
+          <a class="btn btn-ghost btn-sm" href="#book" data-book-time="Weekdays, 6:00 am">Book this time</a>
+        </div>
+        <div class="panel">
+          <div class="day"><span>Weekdays</span><span>Class</span></div>
+          <div class="time">7:00<sup>am</sup></div>
+          <a class="btn btn-ghost btn-sm" href="#book" data-book-time="Weekdays, 7:00 am">Book this time</a>
+        </div>
+        <div class="panel">
+          <div class="day"><span>Weekdays</span><span>Class</span></div>
+          <div class="time">12:00<sup>noon</sup></div>
+          <a class="btn btn-ghost btn-sm" href="#book" data-book-time="Weekdays, 12:00 noon">Book this time</a>
+        </div>
+        <div class="panel">
+          <div class="day"><span>Weekdays</span><span>Class</span></div>
+          <div class="time">5:30<sup>pm</sup></div>
+          <a class="btn btn-ghost btn-sm" href="#book" data-book-time="Weekdays, 5:30 pm">Book this time</a>
+        </div>
+        <div class="panel">
+          <div class="day"><span>Weekdays</span><span>Class</span></div>
+          <div class="time">6:30<sup>pm</sup></div>
+          <a class="btn btn-ghost btn-sm" href="#book" data-book-time="Weekdays, 6:30 pm">Book this time</a>
+        </div>
+
+        <div class="panel photo-panel" aria-hidden="true">
+          <!-- Unsplash: hands after chalking up -->
+          <img src="https://images.unsplash.com/photo-1570642503856-55972f7fb58a?w=800&q=75&auto=format&fit=crop" alt="" width="800" height="1000" loading="lazy">
+        </div>
+
+        <div class="panel sat on-chalk">
+          <div class="day"><span>Saturday</span><span>Class</span></div>
+          <div class="time">8:00<sup>am</sup></div>
+          <a class="btn btn-line btn-sm" href="#book" data-book-time="Saturday, 8:00 am">Book this time</a>
+        </div>
+        <div class="panel sat on-chalk">
+          <div class="day"><span>Saturday</span><span>Class</span></div>
+          <div class="time">9:00<sup>am</sup></div>
+          <a class="btn btn-line btn-sm" href="#book" data-book-time="Saturday, 9:00 am">Book this time</a>
+        </div>
+
+        <div class="panel end">
+          <div>
+            <p class="kicker">Not sure which?</p>
+            <h2 class="display" style="margin-top:16px">Your first session is free.</h2>
+          </div>
+          <a class="btn btn-primary" href="#book">Book it <i data-lucide="arrow-right" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </div>
+    <p class="swipe-hint">Swipe along for every class time.</p>
+    <div class="gprog" aria-hidden="true"><i data-gprog></i></div>
+  </section>
+
+  <!-- 7. BOOK + VISIT: the ending -->
+  <section class="book on-accent" id="book" aria-labelledby="book-title">
+    <div class="wrap">
+      <p class="kicker">Book</p>
+      <h2 class="display book-title" id="book-title" data-rise>
+        <span class="line"><span>First session</span></span>
+        <span class="line"><span>is free.</span></span>
+      </h2>
+
+      <div class="book-grid">
+        <form class="form" id="book-form" action="mailto:coach@northline.example" method="post" enctype="text/plain" novalidate>
+          <h3>Book your free first session</h3>
+          <div class="field">
+            <label for="f-name">Your name</label>
+            <input id="f-name" name="Name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="f-contact">Phone or email</label>
+            <input id="f-contact" name="Contact" type="text" autocomplete="off" required>
+          </div>
+          <div class="field">
+            <label for="f-time">Which time suits you?</label>
+            <div class="sel">
+              <select id="f-time" name="Preferred time">
+                <option>Not sure yet</option>
+                <option>Weekdays, 6:00 am</option>
+                <option>Weekdays, 7:00 am</option>
+                <option>Weekdays, 12:00 noon</option>
+                <option>Weekdays, 5:30 pm</option>
+                <option>Weekdays, 6:30 pm</option>
+                <option>Saturday, 8:00 am</option>
+                <option>Saturday, 9:00 am</option>
+                <option>Open gym</option>
+                <option>One-to-one coaching</option>
+              </select>
+              <i data-lucide="chevron-down" aria-hidden="true"></i>
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit" data-magnetic>Book my free first session <i data-lucide="arrow-right" aria-hidden="true"></i></button>
+          <p class="form-note">This opens an email to coach@northline.example with your details filled in. Nothing is sent until you press send in your email app. Prefer to talk? Call 0400 222 333.</p>
+          <p class="form-status" role="status" aria-live="polite" data-form-status></p>
+        </form>
+
+        <div class="info">
+          <p class="addr">Unit 4,<br>18 Foundry Road,<br>Halden</p>
+          <div class="contact-list">
+            <a href="tel:0400222333"><i data-lucide="phone" aria-hidden="true"></i>0400 222 333</a>
+            <a href="mailto:coach@northline.example"><i data-lucide="mail" aria-hidden="true"></i>coach@northline.example</a>
+          </div>
+          <div class="times">
+            <b>Class times</b>
+            <span>Weekdays: 6 am, 7 am, noon, 5:30 pm, 6:30 pm</span>
+            <span>Saturday: 8 am, 9 am</span>
+          </div>
+          <p class="ph" role="note">Placeholder: open gym hours, and a photo of the front door and the floor, to be supplied by Northline Strength.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bigmark" aria-hidden="true" data-rise><span class="line" style="padding:0;margin:0;overflow:hidden"><span>Northline</span></span></div>
+  </section>
+</main>
+
+<footer class="foot">
+  <span>Northline Strength &middot; Unit 4, 18 Foundry Road, Halden</span>
+  <span>Photographs are stock images from Unsplash and Pexels, standing in for the gym.</span>
+  <a href="tel:0400222333">0400 222 333</a>
+</footer>
+
+<!-- Features that need no libraries: menu, header, booking form -->
+<script>
+(function () {
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  // Header turns solid after the first screen starts to scroll
+  var header = $("#header");
+  function onScroll() { header.classList.toggle("is-solid", window.scrollY > 40); }
+  onScroll(); window.addEventListener("scroll", onScroll, { passive: true });
+
+  // Menu
+  var menu = $("[data-menu]"), openBtn = $("[data-menu-open]"), closeBtn = $("[data-menu-close]");
+  function setMenu(open) {
+    menu.classList.toggle("is-open", open);
+    openBtn.setAttribute("aria-expanded", String(open));
+    document.body.style.overflow = open ? "hidden" : "";
+    if (open) closeBtn.focus(); else openBtn.focus();
+  }
+  openBtn.addEventListener("click", function () { setMenu(true); });
+  closeBtn.addEventListener("click", function () { setMenu(false); });
+  $$("a", menu).forEach(function (a) { a.addEventListener("click", function () { menu.classList.remove("is-open"); openBtn.setAttribute("aria-expanded", "false"); document.body.style.overflow = ""; }); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && menu.classList.contains("is-open")) setMenu(false); });
+
+  // "Book this time" buttons preselect the time in the form
+  var sel = $("#f-time");
+  $$("[data-book-time]").forEach(function (a) {
+    a.addEventListener("click", function () { sel.value = a.getAttribute("data-book-time"); });
+  });
+
+  // Booking form: composes an email to the gym. There is no server behind this page.
+  var form = $("#book-form"), status = $("[data-form-status]");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = $("#f-name"), contact = $("#f-contact");
+    status.textContent = "";
+    if (!name.value.trim()) { status.textContent = "Please add your name."; name.focus(); return; }
+    if (!contact.value.trim()) { status.textContent = "Please add a phone number or email so the gym can reply."; contact.focus(); return; }
+    var body = "Free first session request\n\nName: " + name.value.trim() + "\nPhone or email: " + contact.value.trim() + "\nPreferred time: " + sel.value + "\n";
+    window.location.href = "mailto:coach@northline.example?subject=" + encodeURIComponent("Free first session request") + "&body=" + encodeURIComponent(body);
+    status.textContent = "Your email app should now open with the request ready. Press send there to finish. If nothing opens, call 0400 222 333.";
+  });
+})();
+</script>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  (function () {
+    function run() { if (window.lucide) { window.lucide.createIcons({ attrs: { "stroke-width": 1.75 } }); } }
+    if (document.readyState === "complete") run(); else window.addEventListener("load", run);
+  })();
+</script>
+
+<!-- Motion -->
+<script type="module">
+import { animate, scroll, inView, stagger, hover, press } from "https://cdn.jsdelivr.net/npm/motion@14/+esm";
+import Lenis from "https://cdn.jsdelivr.net/npm/lenis@1/+esm";
+
+const root = document.documentElement;
+const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+const wide = window.matchMedia("(min-width: 768px)").matches;
+const EASE = [0.16, 1, 0.3, 1];
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+
+// Reduced motion: stop the hero video, leave everything else static.
+if (reduce) {
+  $$("[data-hero-video]").forEach((v) => { v.removeAttribute("autoplay"); v.pause(); });
+}
+
+if (!reduce) {
+  // ---- Set every hidden starting state, then release the page -------------------------
+  const riseEls = $$("[data-rise]");
+  riseEls.forEach((h) => $$(".line > span", h).forEach((s) => (s.style.transform = "translateY(110%)")));
+  const loads = $$("[data-load]");
+  loads.forEach((el) => (el.style.opacity = "0"));
+  root.classList.remove("pre");
+
+  // ---- Smooth scrolling ---------------------------------------------------------------
+  new Lenis({ autoRaf: true });
+
+  // ---- 1. The opening -----------------------------------------------------------------
+  const start = () => {
+    const first = $("[data-first]");
+    if (first) animate($$(".line > span", first), { transform: ["translateY(110%)", "translateY(0%)"] },
+      { duration: 1, ease: EASE, delay: stagger(0.11) });
+    animate(loads, { opacity: [0, 1], transform: ["translateY(16px)", "translateY(0px)"] },
+      { duration: 0.8, ease: EASE, delay: stagger(0.1, { startDelay: 0.55 }) });
+    animate(".hero-media", { transform: ["scale(1.1)", "scale(1)"], opacity: [0, 1] }, { duration: 1.8, ease: EASE });
+    animate("[data-north-track]", { transform: ["scaleY(0)", "scaleY(1)"] }, { duration: 1.6, ease: EASE });
+  };
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(start);
+
+  // ---- Other headlines rise when they arrive -------------------------------------------
+  riseEls.filter((h) => !h.hasAttribute("data-first")).forEach((h) => {
+    const lines = $$(".line > span", h);
+    inView(h, () => {
+      animate(lines, { transform: ["translateY(110%)", "translateY(0%)"] }, { duration: 0.95, ease: EASE, delay: stagger(0.09) });
+    }, { amount: 0.4 });
+  });
+
+  // ---- Scroll progress along the north line ---------------------------------------------
+  scroll(animate("[data-north-fill]", { transform: ["scaleY(0)", "scaleY(1)"] }, { ease: "linear" }));
+
+  // ---- Kit band: runs without stopping --------------------------------------------------
+  $$("[data-marquee]").forEach((row) => {
+    const strip = row.firstElementChild;
+    const clone = strip.cloneNode(true);
+    clone.setAttribute("aria-hidden", "true");
+    row.appendChild(clone);
+    animate([strip, clone], { transform: ["translateX(0%)", "translateX(-100%)"] },
+      { duration: 30, ease: "linear", repeat: Infinity });
+  });
+
+  // ---- 2. CENTREPIECE: the bar loads, eight places --------------------------------------
+  const scene = $("[data-scene]");
+  if (scene) {
+    scene.classList.add("is-pinned");
+    const plates = $$("[data-plate]", scene);
+    // Load order: inner plate left, inner plate right, then outwards. DOM is inner to outer on each side.
+    const order = [];
+    for (let k = 0; k < 4; k++) {
+      order.push(plates.filter((p) => p.dataset.side === "l")[k]);
+      order.push(plates.filter((p) => p.dataset.side === "r")[k]);
+    }
+    const caps = $$("[data-cap]", scene);
+    const num = $("[data-num]", scene);
+    const count = $("[data-count]", scene);
+
+    const update = (p) => {
+      let filled = 0;
+      order.forEach((pl, n) => {
+        const t = clamp((p - (0.04 + n * 0.095)) / 0.1);
+        const side = pl.dataset.side === "l" ? -1 : 1;
+        pl.style.transform = `translateX(${side * (1 - easeOut(t)) * 120}vw)`;
+        if (t >= 1) filled++;
+      });
+      num.textContent = filled;
+      count.textContent = filled;
+      num.classList.toggle("is-full", filled === 8);
+      // Captions: three statements, one at a time. The old one leaves before the next arrives.
+      caps.forEach((c, j) => {
+        const a = j / 3, b = (j + 1) / 3, f = 0.045;
+        const tin = j === 0 ? 1 : clamp((p - a) / f);
+        const tout = j === 2 ? 0 : clamp((p - (b - f)) / f);
+        c.style.opacity = tin * (1 - tout);
+        c.style.transform = `translateY(${(1 - tin) * 56 - tout * 56}px)`;
+      });
+    };
+    update(0);
+    scroll(update, { target: scene, offset: ["start start", "end end"] });
+  }
+
+  // ---- Services: images open with a wipe -----------------------------------------------
+  $$("[data-reveal-img]").forEach((box) => {
+    const img = box.firstElementChild;
+    img.style.clipPath = "inset(0 0 100% 0)";
+    inView(box, () => {
+      animate(img, { clipPath: ["inset(0 0 100% 0)", "inset(0 0 0% 0)"], transform: ["scale(1.2)", "scale(1)"] },
+        { duration: 1.2, ease: EASE });
+    }, { amount: 0.25 });
+  });
+
+  // ---- The strike-through draws across Machines and Mirrors ------------------------------
+  $$("[data-strike]").forEach((s, i) => {
+    s.style.transform = "scaleX(0)";
+    inView(s.parentElement, () => {
+      animate(s, { transform: ["scaleX(0)", "scaleX(1)"] }, { duration: 0.9, ease: EASE, delay: 0.25 + i * 0.25 });
+    }, { amount: 0.8 });
+  });
+
+  // ---- Parallax on the tall racks photograph ---------------------------------------------
+  $$("[data-parallax]").forEach((box) => {
+    scroll(animate(box.firstElementChild, { transform: ["translateY(-9%)", "translateY(9%)"] }, { ease: "linear" }),
+      { target: box, offset: ["start end", "end start"] });
+  });
+
+  // ---- Timetable: vertical scroll drives a horizontal run --------------------------------
+  const gal = $("[data-gallery]");
+  if (gal && wide) {
+    const track = $("[data-track]", gal);
+    const bar = $("[data-gprog]", gal);
+    const dist = () => Math.max(0, track.scrollWidth - window.innerWidth);
+    const size = () => { gal.style.height = dist() + window.innerHeight + "px"; };
+    gal.classList.add("is-pinned");
+    size();
+    window.addEventListener("resize", size);
+    window.addEventListener("load", size);
+    scroll((p) => {
+      track.style.transform = `translate3d(${-p * dist()}px, 0, 0)`;
+      bar.style.transform = `scaleX(${p})`;
+    }, { target: gal, offset: ["start start", "end end"] });
+  }
+
+  // ---- 3. The ending: the wordmark rises (handled by [data-rise]) ------------------------
+
+  // ---- Pointer ---------------------------------------------------------------------------
+  if (fine) {
+    $$("[data-magnetic]").forEach((el) => {
+      el.addEventListener("pointermove", (e) => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left - r.width / 2) * 0.25;
+        const y = (e.clientY - r.top - r.height / 2) * 0.25;
+        animate(el, { transform: `translate(${x}px, ${y}px)` }, { duration: 0.3, ease: "easeOut" });
+      });
+      el.addEventListener("pointerleave", () =>
+        animate(el, { transform: "translate(0px, 0px)" }, { type: "spring", stiffness: 300, damping: 15 }));
+    });
+  }
+  press(".btn", (el) => {
+    animate(el, { scale: 0.97 }, { duration: 0.12 });
+    return () => animate(el, { scale: 1 }, { duration: 0.2 });
+  });
+}
+</script>
+</body>
+</html>

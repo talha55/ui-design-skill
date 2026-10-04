@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tidewell Plumbing and Gas | Brackenford</title>
+<meta name="description" content="Tidewell Plumbing and Gas: blocked drains, hot water systems, gas fitting, leak detection, bathroom renovations and emergency call-outs in Brackenford and nearby suburbs. Call 0400 000 000.">
+<meta name="theme-color" content="#08262A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@900&family=Schibsted+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/lenis@1/dist/lenis.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+/* ------------------------------------------------------------------
+   Tokens. Every colour on the page is one of these.
+   Spacing scale: 4 8 12 16 24 32 48 64 96 128
+------------------------------------------------------------------- */
+:root{
+  --ink:#08262A;        /* dominant: hero, scenes, footer, text on paper */
+  --ink-2:#0E3A3F;      /* surface one step up from ink */
+  --tide:#3CC0B4;       /* dominant, light shade: water, blocks, marks */
+  --paper:#EEEADF;      /* background and text on ink */
+  --paper-2:#E2DDCF;    /* surface on paper */
+  --muted:#46605F;      /* muted text on paper */
+  --muted-d:#9DB8B5;    /* muted text on ink */
+  --rule:#C5C0B0;       /* hairlines on paper */
+  --rule-d:#1E4B50;     /* hairlines on ink */
+  --accent:#FF5A1F;     /* call and quote buttons only */
+  --accent-text:#08262A;
+
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:64px; --s9:96px; --s10:128px;
+  --gutter:clamp(16px,4vw,48px);
+  --r-sm:4px; --r-lg:12px;
+  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --text:"Schibsted Grotesk",system-ui,sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --head:64px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:var(--head)}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.6 var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3,p,ol,ul{margin:0}
+ol,ul{padding:0;list-style:none}
+:focus-visible{outline:3px solid var(--tide);outline-offset:3px}
+.on-paper :focus-visible,.on-paper-2 :focus-visible{outline-color:var(--ink)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:var(--s4);top:-80px;z-index:200;background:var(--paper);color:var(--ink);padding:var(--s3) var(--s4);border-radius:var(--r-sm)}
+.skip:focus{top:var(--s3)}
+
+/* grain over the whole page */
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.06;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* shared type */
+.eyebrow{font:700 14px/1.4 var(--text);letter-spacing:.14em;text-transform:uppercase}
+.display{font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:.9;letter-spacing:-.01em}
+.line{display:block;overflow:hidden;padding:.04em 0 .1em}
+.line>span{display:block;will-change:transform}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:var(--s3);min-height:56px;padding:0 var(--s6);border-radius:var(--r-sm);font:700 18px/1 var(--text);text-decoration:none;cursor:pointer;border:0;transition:filter .2s,background-color .2s,color .2s,box-shadow .2s;will-change:transform}
+.btn-primary{background:var(--accent);color:var(--accent-text)}
+.btn-primary:hover{filter:brightness(1.1);box-shadow:0 8px 24px rgba(255,90,31,.32)}
+.btn-primary:active{filter:brightness(.95)}
+.btn-ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 2px currentColor}
+.btn-ghost:hover{background:var(--paper);color:var(--ink);box-shadow:inset 0 0 0 2px var(--paper)}
+.btn svg{width:22px;height:22px;stroke-width:2}
+.link{background:linear-gradient(currentColor,currentColor) 0 100%/0 2px no-repeat;transition:background-size .35s var(--ease);text-decoration:none;padding-bottom:2px}
+.link:hover,.link:focus-visible{background-size:100% 2px}
+
+/* ------------------------------------------------------------------
+   Header
+------------------------------------------------------------------- */
+.top{position:fixed;inset:0 0 auto 0;height:var(--head);z-index:60;display:flex;align-items:center;justify-content:space-between;gap:var(--s4);padding:0 var(--gutter);background:var(--ink);color:var(--paper);border-bottom:1px solid var(--rule-d)}
+.brand{display:flex;align-items:center;gap:var(--s2);text-decoration:none;font:900 26px/1 var(--display);letter-spacing:.02em;text-transform:uppercase}
+.brand svg{width:20px;height:20px;stroke:var(--tide);stroke-width:2}
+.brand small{font:700 11px/1 var(--text);letter-spacing:.14em;color:var(--muted-d);margin-left:var(--s1);display:none}
+.nav{display:none;gap:var(--s6);font:700 15px/1 var(--text)}
+.top .btn{min-height:44px;padding:0 var(--s4);font-size:16px}
+.top .btn .long{display:none}
+@media (min-width:640px){.brand small{display:inline}}
+@media (min-width:900px){.nav{display:flex}.top .btn{padding:0 var(--s5)}.top .btn .long{display:inline}}
+
+/* tide staff: page progress as a rising water mark */
+.staff{position:fixed;right:var(--s3);top:calc(var(--head) + 24px);bottom:24px;width:14px;z-index:55;display:none;border-radius:var(--r-sm);background:var(--ink);box-shadow:0 0 0 1px var(--rule-d);overflow:hidden;pointer-events:none}
+.staff::before{content:"";position:absolute;inset:0;z-index:2;background:repeating-linear-gradient(to bottom,transparent 0 11px,var(--muted-d) 11px 12px);-webkit-mask:linear-gradient(to left,#000 0 6px,transparent 6px);mask:linear-gradient(to left,#000 0 6px,transparent 6px);opacity:.7}
+.staff i{position:absolute;inset:0;background:var(--tide);transform-origin:50% 100%;transform:scaleY(0);will-change:transform}
+@media (min-width:1100px){.staff{display:block}}
+
+/* ------------------------------------------------------------------
+   Hero
+------------------------------------------------------------------- */
+.hero{position:relative;min-height:100vh;min-height:100svh;padding:calc(var(--head) + var(--s5)) var(--gutter) var(--s6);background:radial-gradient(90% 60% at 50% 38%,var(--ink-2),var(--ink) 70%);color:var(--paper);display:flex;flex-direction:column;justify-content:space-between;gap:var(--s5);overflow:hidden}
+.hero-meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--s2) var(--s5);color:var(--muted-d)}
+.live{display:inline-flex;align-items:center;gap:var(--s2)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--tide);box-shadow:0 0 0 0 rgba(60,192,180,.6);animation:ping 2.4s ease-out infinite}
+@keyframes ping{70%,100%{box-shadow:0 0 0 12px rgba(60,192,180,0)}}
+.wm{margin:0;flex:1;display:flex;align-items:center;padding-top:var(--s4)}
+.wm svg{display:block;width:100%;height:auto;overflow:visible}
+.wm .wide{display:none}
+@media (min-width:700px){.wm .wide{display:block}.wm .tall{display:none}}
+.wm text{font-family:var(--display);font-weight:900;text-transform:uppercase}
+.wm .fillbase{fill:var(--ink-2)}
+.wm .outline{fill:none;stroke:var(--paper);stroke-width:2;vector-effect:non-scaling-stroke}
+.wv-a{fill:var(--tide);opacity:.55;animation:slosh-a 9s linear infinite}
+.wv-b{fill:var(--tide);animation:slosh-b 6s linear infinite}
+@keyframes slosh-a{to{transform:translateX(-400px)}}
+@keyframes slosh-b{to{transform:translateX(-400px)}}
+.tall .wv-a,.tall .wv-b{animation-name:sloshm-a}
+@keyframes sloshm-a{to{transform:translateX(-300px)}}
+.hero-foot{display:grid;gap:var(--s5);align-items:end}
+.hero-foot p{max-width:46ch;font-size:18px;color:var(--paper)}
+.hero-foot p b{font-weight:700}
+.cta-row{display:flex;flex-wrap:wrap;gap:var(--s3) var(--s5);align-items:center}
+.cta-row .link{font-weight:700}
+@media (min-width:900px){.hero-foot{grid-template-columns:1fr auto}.hero-foot p{font-size:20px}}
+
+/* ------------------------------------------------------------------
+   Marquee band
+------------------------------------------------------------------- */
+.band{background:var(--paper);color:var(--ink);padding:var(--s5) 0;border-bottom:1px solid var(--rule);overflow:hidden}
+.marquee{overflow:hidden;white-space:nowrap}
+.marquee>div{display:inline-flex;align-items:center;gap:var(--s6);padding-right:var(--s6);will-change:transform}
+.marquee span{font:900 clamp(2.5rem,7vw,6rem)/1 var(--display);text-transform:uppercase}
+.marquee .sep{width:12px;height:12px;border-radius:50%;background:var(--tide);flex:none}
+
+/* ------------------------------------------------------------------
+   Scene: the water rises (pinned when scripts allow)
+------------------------------------------------------------------- */
+.scene{position:relative;background:var(--ink);color:var(--paper)}
+.stage{position:relative;padding:var(--s9) var(--gutter)}
+.plate{position:relative;aspect-ratio:16/9;max-height:60vh;width:100%;overflow:hidden;background:var(--ink-2);margin-bottom:var(--s7)}
+.plate img{width:100%;height:100%;object-fit:cover;will-change:transform}
+.plate::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(8,38,42,.82),rgba(8,38,42,.45))}
+.says{display:grid;gap:var(--s7)}
+.say-k{display:block;margin-bottom:var(--s3);color:var(--tide)}
+.say-t{display:block;font-size:clamp(3rem,10vw,10rem)}
+.scene-cta{margin-top:var(--s7)}
+.scene-cta .say-t{margin-bottom:var(--s5);font-size:clamp(3.25rem,12vw,12rem)}
+.tide,.tide-label{display:none}
+
+.scene.is-pinned{height:420vh}
+.scene.is-pinned .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;padding:0}
+.scene.is-pinned .plate{position:absolute;inset:0;max-height:none;aspect-ratio:auto;margin:0;clip-path:inset(24% 34% 24% 34%);will-change:clip-path}
+.scene.is-pinned .says{position:absolute;left:var(--gutter);right:var(--gutter);bottom:clamp(48px,14vh,128px);z-index:3;display:block}
+.scene.is-pinned .say{position:absolute;left:0;right:0;bottom:0;opacity:0;will-change:transform,opacity}
+.scene.is-pinned .scene-cta{position:absolute;left:var(--gutter);right:var(--gutter);bottom:clamp(48px,24vh,240px);margin:0;z-index:4;opacity:0;pointer-events:none}
+.scene.is-pinned .tide{display:block;position:absolute;inset:0;z-index:2;transform:translateY(100%);will-change:transform;pointer-events:none}
+.scene.is-pinned .tide-body{position:absolute;inset:39px 0 0 0;background:var(--ink)}
+.scene.is-pinned .tide-wave{position:absolute;left:0;top:0;width:100%;height:40px;display:block;overflow:hidden}
+.scene.is-pinned .tide-wave path{fill:var(--ink);animation:slosh-s 11s linear infinite}
+@keyframes slosh-s{to{transform:translateX(-600px)}}
+.scene.is-pinned .tide-label{display:flex;align-items:center;gap:var(--s3);position:absolute;z-index:3;left:var(--gutter);right:var(--gutter);top:-16px;color:var(--tide);pointer-events:none}
+.scene.is-pinned .tide-label::before{content:"";flex:1;height:1px;background:var(--tide);opacity:.7}
+.scene.is-pinned .tide-label span{background:var(--ink);padding:var(--s1) var(--s3);border-radius:var(--r-sm);box-shadow:0 0 0 1px var(--tide)}
+@media (max-width:699px){.scene.is-pinned{height:380vh}}
+
+/* ------------------------------------------------------------------
+   Services
+------------------------------------------------------------------- */
+.services{background:var(--ink);color:var(--paper);padding:var(--s7) var(--gutter) var(--s10)}
+.services .head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:var(--s4);margin-bottom:var(--s7);color:var(--muted-d)}
+.rows{border-top:1px solid var(--rule-d)}
+.row{position:relative;display:grid;grid-template-columns:48px 1fr 32px;column-gap:var(--s4);row-gap:var(--s3);align-items:center;padding:var(--s6) 0;border-bottom:1px solid var(--rule-d);text-decoration:none;color:var(--paper)}
+.row .n{font:900 20px/1 var(--display);color:var(--tide)}
+.row .nm{font-size:clamp(2.75rem,7vw,7.5rem);transition:transform .5s var(--ease),color .3s}
+.row .ds{grid-column:2;max-width:42ch;color:var(--muted-d)}
+.row>svg{width:28px;height:28px;stroke-width:1.75;justify-self:end;color:var(--tide);transition:transform .4s var(--ease)}
+.row-img{grid-column:2/4;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:var(--r-lg);margin-top:var(--s2)}
+@media (hover:hover) and (min-width:900px){
+  .row{grid-template-columns:64px 1fr minmax(0,340px) 48px;padding:var(--s7) 0}
+  .row .ds{grid-column:auto}
+  .row-img{display:none}
+  .row:hover .nm,.row:focus-visible .nm{transform:translateX(24px);color:var(--tide)}
+  .row:hover>svg,.row:focus-visible>svg{transform:translate(4px,-4px)}
+}
+.peek{position:fixed;left:0;top:0;z-index:70;width:380px;aspect-ratio:4/3;pointer-events:none;overflow:hidden;border-radius:var(--r-lg);opacity:0;clip-path:inset(100% 0 0 0);will-change:transform,clip-path}
+.peek img{width:100%;height:100%;object-fit:cover}
+@media (hover:none),(max-width:899px){.peek{display:none}}
+
+/* ------------------------------------------------------------------
+   Facts block
+------------------------------------------------------------------- */
+.facts{position:relative;background:var(--tide);color:var(--ink);padding:var(--s9) var(--gutter) var(--s10);z-index:2}
+.facts-grid{display:grid;gap:var(--s7)}
+.facts h2{font-size:clamp(3.25rem,10.5vw,11.5rem)}
+.facts .lede{max-width:44ch;font-size:20px;margin-top:var(--s6)}
+.facts .eyebrow{margin-bottom:var(--s5)}
+.facts-img{overflow:hidden;border-radius:var(--r-lg);aspect-ratio:4/5;background:var(--ink)}
+.facts-img img{width:100%;height:100%;object-fit:cover}
+@media (min-width:900px){
+  .facts-grid{grid-template-columns:7fr 5fr;align-items:end;gap:var(--s8)}
+  .facts-img{margin-bottom:-192px;margin-right:var(--s9)}
+}
+
+/* ------------------------------------------------------------------
+   Emergency band with parallax photo
+------------------------------------------------------------------- */
+.night{position:relative;height:84vh;min-height:520px;overflow:hidden;background:var(--ink);color:var(--paper);display:flex;align-items:flex-end}
+.night>img{position:absolute;inset:-15% 0;width:100%;height:130%;object-fit:cover;will-change:transform}
+.night::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(8,38,42,.92) 8%,rgba(8,38,42,.4))}
+.night-in{position:relative;z-index:2;width:100%;padding:var(--s9) var(--gutter) var(--s8);display:grid;gap:var(--s5)}
+.night h2{font-size:clamp(3.25rem,13vw,13rem)}
+.night .eyebrow{color:var(--tide)}
+
+/* ------------------------------------------------------------------
+   Area and hours
+------------------------------------------------------------------- */
+.area{background:var(--paper);padding:var(--s10) var(--gutter) var(--s9)}
+.area .eyebrow{color:var(--muted)}
+.area h2{font-size:clamp(3.5rem,17vw,19rem);margin:var(--s4) 0 var(--s3);letter-spacing:-.015em}
+.area .sub{font:900 clamp(1.75rem,4.5vw,4rem)/1 var(--display);text-transform:uppercase;color:var(--muted)}
+.ph{display:inline-block;border:1px dashed var(--muted);color:var(--muted);padding:var(--s1) var(--s3);border-radius:var(--r-sm);font-size:14px}
+.on-ink .ph,.end .ph{border-color:var(--muted-d);color:var(--muted-d)}
+.area .ph-wrap{margin-top:var(--s5)}
+.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:var(--s1);margin-top:var(--s8);max-width:1100px}
+.day{padding:var(--s3) var(--s2);border-radius:var(--r-sm);background:var(--ink);color:var(--paper);min-height:128px;display:flex;flex-direction:column;justify-content:space-between}
+.day b{font:900 clamp(1.25rem,4vw,3rem)/1 var(--display);text-transform:uppercase}
+.day span{font-size:13px;line-height:1.3;color:var(--muted-d);overflow-wrap:anywhere}
+.day.off{background:transparent;box-shadow:inset 0 0 0 1px var(--ink);color:var(--ink)}
+.day.off span{color:var(--muted)}
+.day:not(.off) span{color:var(--tide)}
+.area .note{max-width:60ch;margin-top:var(--s5);color:var(--muted)}
+@media (max-width:520px){.day{min-height:112px;padding:var(--s2) var(--s1)}.day b{font-size:1.25rem}.day span{font-size:11px}}
+
+/* ------------------------------------------------------------------
+   Quote
+------------------------------------------------------------------- */
+.quote{background:var(--paper-2);padding:var(--s9) var(--gutter) var(--s10)}
+.quote-grid{display:grid;gap:var(--s8)}
+.quote h2{font-size:clamp(3.25rem,10vw,10rem)}
+.quote .lede{margin-top:var(--s5);max-width:40ch;font-size:20px}
+.quote .or{margin-top:var(--s6);display:flex;flex-wrap:wrap;gap:var(--s3) var(--s5);align-items:center}
+form{display:grid;gap:var(--s5)}
+.fld{display:grid;gap:var(--s2)}
+.fld label{font:700 15px/1.3 var(--text)}
+.fld input,.fld select,.fld textarea{width:100%;min-height:52px;padding:var(--s3) var(--s4);font:400 17px/1.4 var(--text);color:var(--ink);background:var(--paper);border:1px solid var(--ink);border-radius:var(--r-sm);appearance:none}
+.fld textarea{min-height:128px;resize:vertical}
+.fld select{background-image:linear-gradient(45deg,transparent 50%,var(--ink) 50%),linear-gradient(135deg,var(--ink) 50%,transparent 50%);background-position:calc(100% - 22px) 50%,calc(100% - 16px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:var(--s7)}
+.fld input:focus-visible,.fld select:focus-visible,.fld textarea:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.fld input:user-invalid{border-color:#B3261E;box-shadow:inset 0 0 0 1px #B3261E}
+.two{display:grid;gap:var(--s5)}
+@media (min-width:600px){.two{grid-template-columns:1fr 1fr}}
+.hint{font-size:14px;color:var(--muted)}
+.status{min-height:24px;font-weight:700}
+@media (min-width:960px){.quote-grid{grid-template-columns:5fr 6fr;gap:var(--s9);align-items:start}}
+
+/* ------------------------------------------------------------------
+   Ending
+------------------------------------------------------------------- */
+.end{position:relative;background:var(--ink);color:var(--paper);padding:var(--s10) var(--gutter) var(--s7);overflow:hidden;isolation:isolate}
+.end-tide{position:absolute;left:0;right:0;bottom:0;height:100%;z-index:-1;transform:translateY(100%);pointer-events:none}
+.end-tide .tide-wave{position:absolute;left:0;top:0;width:100%;height:40px;display:block;overflow:hidden}
+.end-tide path{fill:var(--ink-2);animation:slosh-s 11s linear infinite}
+.end-tide .tide-body{position:absolute;inset:39px 0 0 0;background:var(--ink-2)}
+.end-kicker{color:var(--tide)}
+.end-num{display:block;margin:var(--s4) 0 var(--s7);font:900 clamp(3.25rem,15.5vw,17rem)/.9 var(--display);letter-spacing:-.015em;text-decoration:none;text-transform:uppercase;white-space:nowrap;transition:color .3s}
+.end-num:hover{color:var(--tide)}
+.end-grid{display:grid;gap:var(--s6) var(--s7);border-top:1px solid var(--rule-d);padding-top:var(--s6);position:relative}
+.end-grid h3{font:700 14px/1.4 var(--text);letter-spacing:.14em;text-transform:uppercase;color:var(--tide);margin-bottom:var(--s2)}
+.end-grid p{color:var(--paper)}
+.end-grid .m{color:var(--muted-d)}
+@media (min-width:760px){.end-grid{grid-template-columns:repeat(4,1fr)}}
+.fine{margin-top:var(--s7);color:var(--muted-d);font-size:14px}
+
+/* ------------------------------------------------------------------
+   Reduced motion: everything calm and complete
+------------------------------------------------------------------- */
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .dot{box-shadow:none}
+}
+</style>
+</head>
+
+<body>
+<a class="skip" href="#quote">Skip to the quote form</a>
+
+<header class="top">
+  <a class="brand" href="#top" aria-label="Tidewell Plumbing and Gas, back to top">
+    <i data-lucide="droplet" aria-hidden="true"></i>Tidewell <small>Plumbing &amp; Gas</small>
+  </a>
+  <nav class="nav" aria-label="Page sections">
+    <a class="link" href="#services">Services</a>
+    <a class="link" href="#area">Area &amp; hours</a>
+    <a class="link" href="#quote">Request a quote</a>
+  </nav>
+  <a class="btn btn-primary" href="tel:0400000000" data-press>
+    <i data-lucide="phone" aria-hidden="true"></i><span><span class="long">Call </span>0400 000 000</span>
+  </a>
+</header>
+
+<div class="staff" aria-hidden="true"><i data-gauge-fill></i></div>
+
+<main id="top">
+
+<!-- ============================ HERO ============================ -->
+<section class="hero on-ink" aria-labelledby="h1">
+  <div class="hero-meta eyebrow" data-load>
+    <span>Plumbing &amp; gas &middot; Brackenford</span>
+    <span class="live"><i class="dot" aria-hidden="true"></i>Emergency call-outs at any time</span>
+  </div>
+
+  <h1 class="wm" id="h1" data-wm>
+    <span class="sr">Tidewell Plumbing and Gas, Brackenford</span>
+
+    <!-- wide: one line -->
+    <svg class="wide" viewBox="0 0 1200 400" aria-hidden="true" focusable="false">
+      <defs><clipPath id="clip-wide"><text x="0" y="396" font-size="540" textLength="1200" lengthAdjust="spacingAndGlyphs">Tidewell</text></clipPath></defs>
+      <text class="fillbase" x="0" y="396" font-size="540" textLength="1200" lengthAdjust="spacingAndGlyphs">Tidewell</text>
+      <g clip-path="url(#clip-wide)">
+        <g data-water data-h="400" data-w="1200" transform="translate(0 0)">
+          <g data-slosh>
+            <path class="wv-a" d="M-400 46 Q-300.0 22 -200.0 46 T0 46 T200 46 T400 46 T600 46 T800 46 T1000 46 T1200 46 T1400 46 T1600 46 T1800 46 T2000 46 L2000.0 700 L-400 700 Z"/>
+            <path class="wv-b" d="M-400 40 Q-300.0 8 -200.0 40 T0 40 T200 40 T400 40 T600 40 T800 40 T1000 40 T1200 40 T1400 40 T1600 40 T1800 40 T2000 40 L2000.0 700 L-400 700 Z"/>
+          </g>
+        </g>
+      </g>
+      <text class="outline" x="0" y="396" font-size="540" textLength="1200" lengthAdjust="spacingAndGlyphs">Tidewell</text>
+    </svg>
+
+    <!-- phone: two lines, each as wide as the screen -->
+    <svg class="tall" viewBox="0 0 600 700" aria-hidden="true" focusable="false">
+      <defs><clipPath id="clip-tall">
+        <text x="0" y="330" font-size="420" textLength="600" lengthAdjust="spacingAndGlyphs">Tide</text>
+        <text x="0" y="680" font-size="420" textLength="600" lengthAdjust="spacingAndGlyphs">Well</text>
+      </clipPath></defs>
+      <g class="fillbase">
+        <text x="0" y="330" font-size="420" textLength="600" lengthAdjust="spacingAndGlyphs">Tide</text>
+        <text x="0" y="680" font-size="420" textLength="600" lengthAdjust="spacingAndGlyphs">Well</text>
+      </g>
+      <g clip-path="url(#clip-tall)">
+        <g data-water data-h="700" data-w="600" transform="translate(0 0)">
+          <g data-slosh>
+            <path class="wv-a" d="M-300 46 Q-225.0 26 -150.0 46 T0 46 T150 46 T300 46 T450 46 T600 46 T750 46 T900 46 T1050 46 T1200 46 L1200.0 900 L-300 900 Z"/>
+            <path class="wv-b" d="M-300 40 Q-225.0 12 -150.0 40 T0 40 T150 40 T300 40 T450 40 T600 40 T750 40 T900 40 T1050 40 T1200 40 L1200.0 900 L-300 900 Z"/>
+          </g>
+        </g>
+      </g>
+      <g class="outline">
+        <text x="0" y="330" font-size="420" textLength="600" lengthAdjust="spacingAndGlyphs">Tide</text>
+        <text x="0" y="680" font-size="420" textLength="600" lengthAdjust="spacingAndGlyphs">Well</text>
+      </g>
+    </svg>
+  </h1>
+
+  <div class="hero-foot">
+    <p data-load>Blocked drains, hot water, gas fitting, leaks and bathrooms for homes and small businesses in <b>Brackenford and nearby suburbs.</b> Owner-operated, with two vans on the road.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="tel:0400000000" data-magnetic data-press>
+        <i data-lucide="phone" aria-hidden="true"></i>Call 0400 000 000
+      </a>
+      <a class="link" href="#quote">Or request a quote</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ MARQUEE ============================ -->
+<div class="band on-paper" aria-label="What Tidewell does">
+  <div class="marquee" data-marquee>
+    <div>
+      <span>Blocked drains</span><i class="sep"></i>
+      <span>Hot water systems</span><i class="sep"></i>
+      <span>Gas fitting</span><i class="sep"></i>
+      <span>Leak detection</span><i class="sep"></i>
+      <span>Bathroom renovations</span><i class="sep"></i>
+      <span>Emergency call-outs</span><i class="sep"></i>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ SCENE ============================ -->
+<section class="scene on-ink" data-scene aria-label="When people ring a plumber">
+  <div class="stage">
+    <div class="plate" data-plate>
+      <img src="https://images.unsplash.com/photo-1505695715220-3a366d958259?w=2000&q=80&auto=format&fit=crop" width="2000" height="1333" alt="A plant room with grey steel pipes and water pooled on the floor" loading="lazy">
+    </div>
+
+    <div class="says">
+      <p class="say" data-say><span class="say-k eyebrow">Blocked drains</span><span class="say-t display">The drain&rsquo;s gurgling.</span></p>
+      <p class="say" data-say><span class="say-k eyebrow">Hot water systems</span><span class="say-t display">Cold shower. Again.</span></p>
+      <p class="say" data-say><span class="say-k eyebrow">Gas fitting</span><span class="say-t display">New gas appliance. Needs connecting.</span></p>
+      <p class="say" data-say><span class="say-k eyebrow">Leak detection</span><span class="say-t display">A damp patch that keeps growing.</span></p>
+      <p class="say" data-say><span class="say-k eyebrow">Bathroom renovations</span><span class="say-t display">A bathroom that&rsquo;s had its day.</span></p>
+      <p class="say" data-say><span class="say-k eyebrow">Emergency call-outs</span><span class="say-t display">2 am. Water on the floor.</span></p>
+    </div>
+
+    <div class="tide" data-tide aria-hidden="true">
+      <div class="tide-label eyebrow"><span data-tide-label>Blocked drains</span></div>
+      <svg class="tide-wave" viewBox="0 0 1200 40" preserveAspectRatio="none"><path d="M-600 20 Q-450.0 0 -300.0 20 T0 20 T300 20 T600 20 T900 20 T1200 20 T1500 20 T1800 20 T2100 20 T2400 20 T2700 20 T3000 20 T3300 20 T3600 20 L3600.0 300 L-600 300 Z"/></svg>
+      <div class="tide-body"></div>
+    </div>
+
+    <div class="scene-cta" data-scene-cta>
+      <span class="say-t display">Whatever it is, ring.</span>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="tel:0400000000" data-magnetic data-press><i data-lucide="phone" aria-hidden="true"></i>Call 0400 000 000</a>
+        <a class="link" href="#quote">Or request a quote</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ SERVICES ============================ -->
+<section class="services on-ink" id="services" aria-labelledby="services-h">
+  <div class="head eyebrow">
+    <h2 id="services-h" class="eyebrow" style="margin:0">What you can call us for</h2>
+    <span>Tap a job to start a quote</span>
+  </div>
+  <ol class="rows" data-rows>
+    <li><a class="row" href="#quote" data-service="Blocked drains" data-img="https://images.unsplash.com/photo-1577558678587-4a8af447679c?w=1000&q=80&auto=format&fit=crop">
+      <span class="n">01</span><span class="nm display">Blocked drains</span><span class="ds">Slow sinks, backed-up showers, gurgling pipes.</span><i data-lucide="arrow-up-right" aria-hidden="true"></i>
+      <img class="row-img" src="https://images.unsplash.com/photo-1577558678587-4a8af447679c?w=1000&q=80&auto=format&fit=crop" width="1000" height="667" alt="Looking down a dark round drain pipe towards daylight at the end" loading="lazy">
+    </a></li>
+    <li><a class="row" href="#quote" data-service="Hot water systems" data-img="https://images.unsplash.com/photo-1620653713380-7a34b773fef8?w=1000&q=80&auto=format&fit=crop">
+      <span class="n">02</span><span class="nm display">Hot water systems</span><span class="ds">Hot water that has gone cold, started leaking, or is past it.</span><i data-lucide="arrow-up-right" aria-hidden="true"></i>
+      <img class="row-img" src="https://images.unsplash.com/photo-1620653713380-7a34b773fef8?w=1000&q=80&auto=format&fit=crop" width="1000" height="667" alt="A hand using a tool on the pipework of a white hot water tank" loading="lazy">
+    </a></li>
+    <li><a class="row" href="#quote" data-service="Gas fitting" data-img="https://images.unsplash.com/photo-1728509741559-44172bcd86b3?w=1000&q=80&auto=format&fit=crop">
+      <span class="n">03</span><span class="nm display">Gas fitting</span><span class="ds">Gas lines, appliances and connections.</span><i data-lucide="arrow-up-right" aria-hidden="true"></i>
+      <img class="row-img" src="https://images.unsplash.com/photo-1728509741559-44172bcd86b3?w=1000&q=80&auto=format&fit=crop" width="1000" height="667" alt="A ring of blue gas flame burning on a hob" loading="lazy">
+    </a></li>
+    <li><a class="row" href="#quote" data-service="Leak detection" data-img="https://images.unsplash.com/photo-1596394723269-b2cbca4e6313?w=1000&q=80&auto=format&fit=crop">
+      <span class="n">04</span><span class="nm display">Leak detection</span><span class="ds">Finding the drip you can&rsquo;t see before it finds your ceiling.</span><i data-lucide="arrow-up-right" aria-hidden="true"></i>
+      <img class="row-img" src="https://images.unsplash.com/photo-1596394723269-b2cbca4e6313?w=1000&q=80&auto=format&fit=crop" width="1000" height="667" alt="Water spraying from an old brass pipe fitting" loading="lazy">
+    </a></li>
+    <li><a class="row" href="#quote" data-service="Bathroom renovations" data-img="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=1000&q=80&auto=format&fit=crop">
+      <span class="n">05</span><span class="nm display">Bathroom renovations</span><span class="ds">Out with the old bathroom, in with a new one.</span><i data-lucide="arrow-up-right" aria-hidden="true"></i>
+      <img class="row-img" src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=1000&q=80&auto=format&fit=crop" width="1000" height="667" alt="A finished bathroom with a glass shower screen and a long vanity" loading="lazy">
+    </a></li>
+    <li><a class="row" href="#quote" data-service="Emergency call-out" data-img="https://images.unsplash.com/photo-1669920282730-ab422e592f97?w=1000&q=80&auto=format&fit=crop">
+      <span class="n">06</span><span class="nm display">Emergency <span style="white-space:nowrap">call-outs</span></span><span class="ds">Burst pipes, flooding, no water. Ring at any hour.</span><i data-lucide="arrow-up-right" aria-hidden="true"></i>
+      <img class="row-img" src="https://images.unsplash.com/photo-1669920282730-ab422e592f97?w=1000&q=80&auto=format&fit=crop" width="1000" height="667" alt="Water gushing from a brass tap with a red handle into a basin" loading="lazy">
+    </a></li>
+  </ol>
+</section>
+<div class="peek" data-peek aria-hidden="true"><img alt="" width="1000" height="667"></div>
+
+<!-- ============================ FACTS ============================ -->
+<section class="facts" aria-labelledby="facts-h">
+  <div class="facts-grid">
+    <div>
+      <p class="eyebrow">The business</p>
+      <h2 id="facts-h" class="display" data-mask>
+        <span class="line"><span>Owner-operated.</span></span>
+        <span class="line"><span>Two vans.</span></span>
+        <span class="line"><span>Homes and small businesses.</span></span>
+      </h2>
+      <p class="lede">Residential and small commercial plumbing and gas work, across Brackenford and nearby suburbs.</p>
+    </div>
+    <div class="facts-img" data-reveal-img>
+      <img src="https://images.unsplash.com/photo-1694827893591-af9b80361599?w=1000&q=80&auto=format&fit=crop" width="1000" height="1250" alt="Two copper pipes running down a brick wall" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- ============================ EMERGENCY ============================ -->
+<section class="night on-ink" data-parallax aria-labelledby="night-h">
+  <img src="https://images.unsplash.com/photo-1761074342668-c38fc2e62e67?w=2000&q=80&auto=format&fit=crop" width="2000" height="1333" alt="Pliers, spanners and pipe wrenches hanging on a workshop wall" loading="lazy">
+  <div class="night-in">
+    <p class="eyebrow">Emergency call-outs</p>
+    <h2 id="night-h" class="display" data-mask>
+      <span class="line"><span>Any hour.</span></span>
+      <span class="line"><span>Ring.</span></span>
+    </h2>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="tel:0400000000" data-magnetic data-press><i data-lucide="phone" aria-hidden="true"></i>Call 0400 000 000</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ AREA + HOURS ============================ -->
+<section class="area on-paper" id="area" aria-labelledby="area-h">
+  <p class="eyebrow">Where we work</p>
+  <h2 id="area-h" class="display" data-mask>
+    <span class="line"><span>Brackenford</span></span>
+  </h2>
+  <p class="sub">and nearby suburbs</p>
+  <p class="ph-wrap"><span class="ph">Suburb list: to be supplied by Tidewell</span></p>
+
+  <ol class="days" aria-label="Opening days">
+    <li class="day"><b>Mon</b><span>Open</span></li>
+    <li class="day"><b>Tue</b><span>Open</span></li>
+    <li class="day"><b>Wed</b><span>Open</span></li>
+    <li class="day"><b>Thu</b><span>Open</span></li>
+    <li class="day"><b>Fri</b><span>Open</span></li>
+    <li class="day"><b>Sat</b><span>Open</span></li>
+    <li class="day off"><b>Sun</b><span>Emergency only</span></li>
+  </ol>
+  <p class="note">Open Monday to Saturday. Emergency call-outs at any time, every day. <span class="ph">Opening times: to be supplied by Tidewell</span></p>
+</section>
+
+<!-- ============================ QUOTE ============================ -->
+<section class="quote on-paper-2" id="quote" aria-labelledby="quote-h">
+  <div class="quote-grid">
+    <div>
+      <p class="eyebrow">Get a quote</p>
+      <h2 id="quote-h" class="display" data-mask style="margin-top:16px">
+        <span class="line"><span>Tell us</span></span>
+        <span class="line"><span>the job.</span></span>
+      </h2>
+      <p class="lede">A few details are enough to start. Or skip the form and ring.</p>
+      <div class="or">
+        <a class="btn btn-primary" href="tel:0400000000" data-magnetic data-press><i data-lucide="phone" aria-hidden="true"></i>Call 0400 000 000</a>
+        <a class="link" href="mailto:hello@tidewell.example">hello@tidewell.example</a>
+      </div>
+    </div>
+
+    <form data-form novalidate>
+      <div class="two">
+        <div class="fld"><label for="f-name">Your name</label><input id="f-name" name="name" autocomplete="name" required></div>
+        <div class="fld"><label for="f-phone">Phone number</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required></div>
+      </div>
+      <div class="two">
+        <div class="fld"><label for="f-suburb">Suburb</label><input id="f-suburb" name="suburb" autocomplete="address-level2" required></div>
+        <div class="fld"><label for="f-job">What do you need?</label>
+          <select id="f-job" name="job" required>
+            <option value="">Choose one</option>
+            <option>Blocked drains</option>
+            <option>Hot water systems</option>
+            <option>Gas fitting</option>
+            <option>Leak detection</option>
+            <option>Bathroom renovations</option>
+            <option>Emergency call-out</option>
+            <option>Something else</option>
+          </select>
+        </div>
+      </div>
+      <div class="fld"><label for="f-msg">Details of the job</label><textarea id="f-msg" name="msg" placeholder="What is happening, and where in the house or building?"></textarea></div>
+      <div>
+        <button class="btn btn-primary" type="submit" data-press><i data-lucide="send" aria-hidden="true"></i>Send quote request</button>
+        <p class="hint" style="margin-top:12px">Sending opens an email to hello@tidewell.example with your details filled in. For an emergency, please ring instead.</p>
+        <p class="status" role="status" aria-live="polite" data-status></p>
+      </div>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================ ENDING ============================ -->
+<footer class="end on-ink" data-end>
+  <div class="end-tide" data-end-tide aria-hidden="true">
+    <svg class="tide-wave" viewBox="0 0 1200 40" preserveAspectRatio="none"><path d="M-600 20 Q-450.0 0 -300.0 20 T0 20 T300 20 T600 20 T900 20 T1200 20 T1500 20 T1800 20 T2100 20 T2400 20 T2700 20 T3000 20 T3300 20 T3600 20 L3600.0 300 L-600 300 Z"/></svg>
+    <div class="tide-body"></div>
+  </div>
+
+  <p class="end-kicker eyebrow">Brackenford plumbing and gas. Emergencies at any time.</p>
+  <a class="end-num" href="tel:0400000000" data-magnetic aria-label="Call Tidewell on 0400 000 000">0400 000 000</a>
+
+  <div class="end-grid">
+    <div><h3>Email</h3><p><a class="link" href="mailto:hello@tidewell.example">hello@tidewell.example</a></p></div>
+    <div><h3>Open</h3><p>Monday to Saturday</p><p class="m">Emergency call-outs at any time</p></div>
+    <div><h3>Area</h3><p>Brackenford and nearby suburbs</p></div>
+    <div><h3>Licence</h3><p><span class="ph">Licence number: to be supplied</span></p></div>
+  </div>
+  <p class="fine">Tidewell Plumbing and Gas. Photographs on this page are stand-ins and do not show Tidewell&rsquo;s own work.</p>
+</footer>
+
+<script>lucide.createIcons({attrs:{"stroke-width":1.75}});</script>
+
+<script type="module">
+import { animate, scroll, inView, stagger, press } from "https://cdn.jsdelivr.net/npm/motion@14/+esm";
+import Lenis from "https://cdn.jsdelivr.net/npm/lenis@1/+esm";
+
+const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+const wide = window.matchMedia("(min-width: 900px)").matches;
+const EASE = [0.16, 1, 0.3, 1];
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+/* ---------- always: the quote form and service shortcuts (no motion needed) ---------- */
+$$("[data-service]").forEach((a) =>
+  a.addEventListener("click", () => {
+    const sel = $("#f-job");
+    if (sel) sel.value = a.dataset.service;
+  })
+);
+const form = $("[data-form]");
+const status = $("[data-status]");
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const f = new FormData(form);
+  const missing = ["name", "phone", "suburb", "job"].filter((k) => !String(f.get(k) || "").trim());
+  $$("input[required], select[required]", form).forEach((el) => el.setAttribute("aria-invalid", String(!el.value.trim())));
+  if (missing.length) {
+    status.textContent = "Please fill in your name, phone number, suburb and the kind of job so we can get back to you.";
+    $(`[name="${missing[0]}"]`, form).focus();
+    return;
+  }
+  const body = [
+    `Name: ${f.get("name")}`, `Phone: ${f.get("phone")}`, `Suburb: ${f.get("suburb")}`,
+    `Job: ${f.get("job")}`, "", `${f.get("msg") || ""}`
+  ].join("\n");
+  window.location.href = `mailto:hello@tidewell.example?subject=${encodeURIComponent("Quote request: " + f.get("job"))}&body=${encodeURIComponent(body)}`;
+  status.textContent = "Your email app should now open with the details ready to send. If it does not, ring 0400 000 000.";
+});
+
+/* ---------- service rows: photo follows the cursor ---------- */
+const peek = $("[data-peek]");
+if (fine && wide && peek) {
+  const peekImg = peek.firstElementChild;
+  let x = 0, y = 0, shown = false;
+  const place = () => animate(peek, { transform: `translate(${x + 32}px, ${y - 130}px) rotate(-3deg)` }, { duration: reduce ? 0 : 0.45, ease: "easeOut" });
+  window.addEventListener("pointermove", (e) => { x = e.clientX; y = e.clientY; if (shown) place(); });
+  $$("[data-rows] .row").forEach((row) => {
+    row.addEventListener("pointerenter", () => {
+      peekImg.src = row.dataset.img;
+      shown = true;
+      peek.style.opacity = "1";
+      place();
+      animate(peek, { clipPath: ["inset(100% 0 0 0)", "inset(0% 0 0 0)"] }, { duration: reduce ? 0 : 0.6, ease: EASE });
+    });
+    row.addEventListener("pointerleave", () => {
+      shown = false;
+      animate(peek, { clipPath: ["inset(0% 0 0 0)", "inset(0 0 100% 0)"] }, { duration: reduce ? 0 : 0.4, ease: EASE })
+        .finished.then(() => { if (!shown) peek.style.opacity = "0"; });
+    });
+  });
+}
+
+/* ---------- motion ---------- */
+if (!reduce) {
+  new Lenis({ autoRaf: true, anchors: true });
+
+  /* press feedback on buttons */
+  press(".btn", (el) => {
+    animate(el, { scale: 0.96 }, { duration: 0.12 });
+    return () => animate(el, { scale: 1 }, { duration: 0.2 });
+  });
+
+  /* 1. THE OPENING: water fills the name, then the rest settles in */
+  const waters = $$("[data-water]");
+  const slosh = $$("[data-slosh]");
+  const setLevel = (g, p) => g.setAttribute("transform", `translate(0 ${(1 - p) * (Number(g.dataset.h) + 70)})`);
+  waters.forEach((g) => setLevel(g, 0));
+  animate(0, 1, { duration: 2.6, delay: 0.3, ease: [0.3, 0.7, 0.2, 1], onUpdate: (p) => waters.forEach((g) => setLevel(g, p)) });
+
+  animate("[data-load]",
+    { opacity: [0, 1], transform: ["translateY(16px)", "translateY(0px)"] },
+    { duration: 0.7, ease: EASE, delay: stagger(0.12, { startDelay: 0.5 }) });
+
+  /* water sloshes toward the pointer */
+  if (fine) {
+    const hero = $(".hero");
+    let cur = 0;
+    hero.addEventListener("pointermove", (e) => {
+      const r = hero.getBoundingClientRect();
+      const target = ((e.clientX - r.left) / r.width - 0.5) * 7;
+      animate(cur, target, { duration: 0.9, ease: "easeOut", onUpdate: (v) => {
+        cur = v;
+        slosh.forEach((g) => {
+          const w = Number(g.parentNode.dataset.w);
+          g.setAttribute("transform", `rotate(${v} ${w / 2} 40)`);
+        });
+      } });
+    });
+  }
+
+  /* masked headings rise line by line */
+  $$("[data-mask]").forEach((h) => {
+    const lines = $$(".line > span", h);
+    lines.forEach((l) => (l.style.transform = "translateY(112%)"));
+    inView(h, () => {
+      animate(lines, { transform: ["translateY(112%)", "translateY(0%)"] }, { duration: 1, ease: EASE, delay: stagger(0.09) });
+    }, { amount: 0.4 });
+  });
+
+  /* marquee */
+  $$("[data-marquee]").forEach((m) => {
+    const strip = m.firstElementChild;
+    const clone = strip.cloneNode(true);
+    clone.setAttribute("aria-hidden", "true");
+    m.appendChild(clone);
+    animate([strip, clone], { transform: ["translateX(0%)", "translateX(-100%)"] }, { duration: 32, ease: "linear", repeat: Infinity });
+  });
+
+  /* 2. THE CENTREPIECE: the water rises through six jobs */
+  const scene = $("[data-scene]");
+  if (scene) {
+    scene.classList.add("is-pinned");
+    const range = { target: scene, offset: ["start start", "end end"] };
+    const plate = $("[data-plate]", scene);
+    const tide = $("[data-tide]", scene);
+    const label = $("[data-tide-label]", scene);
+    const cta = $("[data-scene-cta]", scene);
+    const says = $$("[data-say]", scene);
+    const names = says.map((s) => $(".say-k", s).textContent);
+
+    // the framed picture opens to fill the screen
+    scroll(animate(plate, { clipPath: ["inset(24% 34% 24% 34%)", "inset(0% 0% 0% 0%)", "inset(0% 0% 0% 0%)"] },
+      { ease: "linear", times: [0, 0.14, 1] }), range);
+    scroll(animate(plate.firstElementChild, { transform: ["scale(1.5)", "scale(1.05)", "scale(1.18)"] },
+      { ease: "linear", times: [0, 0.14, 1] }), range);
+
+    // the water climbs the whole way, to full by the end
+    scroll(animate(tide, { transform: ["translateY(100%)", "translateY(100%)", "translateY(0%)", "translateY(0%)"] },
+      { ease: "linear", times: [0, 0.08, 0.9, 1] }), range);
+
+    // six statements replace each other
+    const start = 0.1, span = 0.76 / says.length;
+    says.forEach((s, i) => {
+      const a = start + i * span, b = a + span, e = 0.018;
+      scroll(animate(s, {
+        opacity: [0, 0, 1, 1, 0, 0],
+        transform: ["translateY(56px)", "translateY(56px)", "translateY(0px)", "translateY(0px)", "translateY(-56px)", "translateY(-56px)"]
+      }, { ease: "linear", times: [0, a, a + e * 2, b - e * 2, b, 1] }), range);
+    });
+
+    // the closing line and the call button
+    scroll(animate(cta, { opacity: [0, 0, 1, 1], transform: ["translateY(40px)", "translateY(40px)", "translateY(0px)", "translateY(0px)"] },
+      { ease: "linear", times: [0, 0.88, 0.95, 1] }), range);
+
+    // label riding the waterline, and the button only clickable once it shows
+    scroll((p) => {
+      const i = Math.min(says.length - 1, Math.max(0, Math.floor((p - start) / span)));
+      if (label.textContent !== names[i]) label.textContent = names[i];
+      cta.style.pointerEvents = p > 0.93 ? "auto" : "none";
+    }, range);
+  }
+
+  /* image wipe */
+  $$("[data-reveal-img]").forEach((box) => {
+    const img = box.firstElementChild;
+    img.style.clipPath = "inset(0 0 100% 0)";
+    inView(box, () => {
+      animate(img, { clipPath: ["inset(0 0 100% 0)", "inset(0 0 0% 0)"], transform: ["scale(1.25)", "scale(1)"] }, { duration: 1.2, ease: EASE });
+    }, { amount: 0.25 });
+  });
+
+  /* parallax */
+  $$("[data-parallax]").forEach((box) => {
+    scroll(animate(box.firstElementChild, { transform: ["translateY(-10%)", "translateY(10%)"] }, { ease: "linear" }),
+      { target: box, offset: ["start end", "end start"] });
+  });
+
+  /* 3. THE ENDING: water rises behind the number */
+  const end = $("[data-end]");
+  if (end) {
+    scroll(animate($("[data-end-tide]", end), { transform: ["translateY(100%)", "translateY(34%)"] }, { ease: "linear" }),
+      { target: end, offset: ["start end", "end end"] });
+  }
+
+  /* tide staff: page progress */
+  scroll(animate("[data-gauge-fill]", { transform: ["scaleY(0)", "scaleY(1)"] }, { ease: "linear" }));
+
+  /* touch: pointer-only effects */
+  if (fine) {
+    $$("[data-magnetic]").forEach((el) => {
+      el.addEventListener("pointermove", (e) => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left - r.width / 2) * 0.25;
+        const y = (e.clientY - r.top - r.height / 2) * 0.25;
+        animate(el, { transform: `translate(${x}px, ${y}px)` }, { duration: 0.3, ease: "easeOut" });
+      });
+      el.addEventListener("pointerleave", () =>
+        animate(el, { transform: "translate(0px, 0px)" }, { type: "spring", stiffness: 300, damping: 15 }));
+    });
+  }
+}
+</script>
+</body>
+</html>

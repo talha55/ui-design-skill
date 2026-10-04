@@ -1,0 +1,848 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ember &amp; Salt | Wood-fire restaurant, Marrowick</title>
+<meta name="description" content="Ember &amp; Salt is a 40-seat wood-fire restaurant with an open kitchen at 3 Quay Lane, Marrowick. Dinner Wednesday to Sunday, lunch Saturday and Sunday. Book by phone or email.">
+<meta name="theme-color" content="#12100E">
+
+<!--
+  Media credits (all stand-ins until the restaurant supplies its own):
+  Video (Pexels): wood-fired oven baking, id 37294884; campfire with sparks (braai), id 5305345.
+  Photos (Unsplash): Michael Lock (grilled fish), David Trinks (roast lamb), Justine / sweetyoga (flatbreads),
+  Alaa Turkman (grilled vegetables), Tadeas P (harbour boats), Kamakshi Subramani (salt), Ambitious Studio / Rick Barrett (fire in oven).
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Albert+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/lenis@1/dist/lenis.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+  :root {
+    /* Palette: every colour on the page is one of these */
+    --char: #12100E;      /* dominant: headings on light, page and footer on dark */
+    --ash: #1E1A17;       /* hours section surface */
+    --smoke: #A9A195;     /* muted text on dark */
+    --salt: #EDE8DC;      /* light sections, text on dark */
+    --brine: #D6CFBF;     /* borders and quiet surfaces on salt */
+    --stone: #5A534A;     /* muted text on salt */
+    --ember: #F2541B;     /* primary action, lit seats, the fire; never body text on salt */
+    --ember-hi: #FF6B35;  /* primary action hover */
+
+    --display: 'Gloock', Georgia, 'Times New Roman', serif;
+    --text: 'Albert Sans', ui-sans-serif, system-ui, sans-serif;
+    --ease: cubic-bezier(.16, 1, .3, 1);
+    --r-sm: 4px;
+    --r-lg: 16px;
+    --gutter: clamp(16px, 4.5vw, 64px);
+  }
+
+  html { scroll-behavior: auto; background: var(--char); }
+  body {
+    margin: 0; background: var(--char); color: var(--salt);
+    font-family: var(--text); font-size: 17px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+  img, video { display: block; max-width: 100%; }
+  a { color: inherit; }
+  h1, h2, h3, p, ol, ul, figure { margin: 0; }
+  ol, ul { padding: 0; list-style: none; }
+
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .skip { position: absolute; left: 16px; top: -64px; z-index: 200; background: var(--salt); color: var(--char); padding: 12px 16px; border-radius: var(--r-sm); font-weight: 700; }
+  .skip:focus { top: 16px; }
+
+  :focus-visible { outline: 3px solid var(--ember); outline-offset: 3px; }
+  .on-salt :focus-visible { outline-color: var(--char); }
+
+  /* Grain over the whole page */
+  body::after {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: .07; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .wrap { padding-left: var(--gutter); padding-right: var(--gutter); }
+  .on-salt { background: var(--salt); color: var(--char); }
+
+  /* Type */
+  .display { font-family: var(--display); font-weight: 400; letter-spacing: -.03em; line-height: .98; }
+  .label { font-size: 14px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+  .on-salt .label { color: var(--stone); }
+  .dark .label, .label.dim { color: var(--smoke); }
+  .lede { font-size: clamp(1.0625rem, 1.5vw, 1.25rem); line-height: 1.6; max-width: 38rem; }
+
+  .line { display: block; overflow: hidden; padding-bottom: .1em; margin-bottom: -.1em; }
+  .line > span { display: block; will-change: transform; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+    min-height: 52px; padding: 12px 24px; border-radius: var(--r-sm);
+    font: 700 1rem/1.2 var(--text); text-decoration: none; cursor: pointer; border: 2px solid transparent;
+    transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+    will-change: transform;
+  }
+  .btn-primary { background: var(--ember); color: var(--char); }
+  .btn-primary:hover { background: var(--ember-hi); }
+  .btn-ghost { background: transparent; color: var(--salt); border-color: rgba(237, 232, 220, .55); }
+  .btn-ghost:hover { border-color: var(--salt); background: rgba(237, 232, 220, .1); }
+  .btn svg, .link svg { width: 20px; height: 20px; stroke-width: 1.75; flex: none; }
+
+  .link {
+    display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 700;
+    background: linear-gradient(currentColor, currentColor) 0 100% / 0 2px no-repeat;
+    transition: background-size .35s var(--ease); padding-bottom: 4px;
+  }
+  .link:hover, .link:focus-visible { background-size: 100% 2px; }
+
+  /* Header */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 60; height: 72px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 0 var(--gutter);
+  }
+  .nav { pointer-events: none; mix-blend-mode: difference; color: #fff; }
+  .nav > * { pointer-events: auto; }
+  .brand { font-family: var(--display); font-size: 1.5rem; letter-spacing: -.02em; text-decoration: none; color: #fff; line-height: 1; }
+  .nav-links { display: none; position: absolute; left: 50%; transform: translateX(-50%); gap: 32px; color: #fff; font-weight: 500; font-size: 15px; }
+  .nav-links a { text-decoration: none; padding: 12px 0; }
+  .nav-right { position: fixed; top: 14px; right: var(--gutter); z-index: 61; display: flex; align-items: center; gap: 8px; }
+  .nav-right .btn { min-height: 44px; padding: 8px 16px; font-size: 15px; }
+  .menu-btn { width: 44px; height: 44px; display: grid; place-items: center; background: var(--char); color: var(--salt); border: 1px solid rgba(237,232,220,.3); border-radius: var(--r-sm); cursor: pointer; }
+  .menu-btn svg { width: 20px; height: 20px; stroke-width: 1.75; }
+  .menu-btn .i-close { display: none; }
+  .menu-open .menu-btn .i-open { display: none; }
+  .menu-open .menu-btn .i-close { display: block; }
+  .menu-panel { position: fixed; top: 72px; left: 0; right: 0; z-index: 59; background: var(--char); padding: 16px var(--gutter) 32px; display: none; border-bottom: 1px solid rgba(237,232,220,.2); }
+  .menu-open .menu-panel { display: block; }
+  .menu-panel a { display: block; font-family: var(--display); font-size: 2rem; padding: 12px 0; text-decoration: none; letter-spacing: -.02em; }
+  @media (min-width: 900px) {
+    .nav-links { display: flex; }
+    .menu-btn, .menu-panel { display: none !important; }
+  }
+
+  /* Progress bar */
+  .progress { position: fixed; left: 0; top: 0; height: 3px; width: 100%; transform-origin: 0 50%; transform: scaleX(0); z-index: 70; background: var(--ember); }
+
+  /* Cursor follower */
+  .cursor { position: fixed; left: 0; top: 0; width: 18px; height: 18px; border-radius: 50%; pointer-events: none; mix-blend-mode: difference; background: #fff; z-index: 99; transform: translate(-100px, -100px); }
+  @media (hover: none) { .cursor { display: none; } }
+
+  /* Hero */
+  .hero { position: relative; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; background: var(--char); isolation: isolate; }
+  .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -3; will-change: transform; filter: sepia(.4) saturate(1.5) hue-rotate(-6deg); }
+  .hero-shade { position: absolute; inset: 0; z-index: -2; background:
+      linear-gradient(180deg, rgba(18,16,14,.66) 0%, rgba(18,16,14,.58) 38%, rgba(18,16,14,.9) 100%); }
+  .sparks { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+  .hero-inner { padding: 120px var(--gutter) 32px; }
+  .hero-eyebrow { margin-bottom: 16px; color: var(--salt); }
+  .hero-title { font-size: 26vw; padding-left: 0; }
+  .hero-title .line:nth-child(2) { padding-left: .55em; }
+  .hero-foot { display: grid; gap: 24px; margin-top: 32px; align-items: end; }
+  .hero-lede { max-width: 30rem; font-size: 1.1875rem; color: var(--salt); }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; }
+  .hero-strip { display: flex; flex-wrap: wrap; gap: 8px 32px; padding: 16px var(--gutter); border-top: 1px solid rgba(237,232,220,.25); font-size: 14px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--salt); background: rgba(18,16,14,.55); }
+  .hero-strip span { white-space: nowrap; }
+  @media (min-width: 768px) {
+    .hero-title { font-size: min(19vw, 31svh); }
+    .hero-foot { grid-template-columns: 1.2fr 1fr; gap: 48px; }
+    .hero-cta { justify-content: flex-end; }
+  }
+
+  /* Pointer heat (dark sections) */
+  [data-glow] { position: relative; }
+  [data-glow]::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+    background: radial-gradient(480px circle at var(--mx, 72%) var(--my, 30%), rgba(242,84,27,.2), transparent 65%);
+  }
+  @media (hover: none) { [data-glow]::before { display: none; } }
+
+  /* Arrival (salt) */
+  .arrive { padding-top: 96px; padding-bottom: 128px; position: relative; }
+  .arrive-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+  .arrive-text { grid-column: 1 / -1; display: grid; gap: 24px; }
+  .arrive-h { font-size: clamp(2.75rem, 8.2vw, 9rem); max-width: 14ch; }
+  .menu-ph { max-width: 38rem; border: 2px dashed var(--stone); border-radius: var(--r-sm); padding: 24px; color: var(--stone); display: grid; gap: 8px; }
+  .menu-ph strong { color: var(--char); font-size: 1rem; letter-spacing: .1em; text-transform: uppercase; font-size: 14px; }
+  .arrive-photo { grid-column: 1 / -1; margin-top: 32px; }
+  .arrive-photo .reveal-img { aspect-ratio: 16 / 10; background: var(--brine); }
+  .arrive-salt { display: none; }
+  .reveal-img { overflow: hidden; position: relative; border-radius: var(--r-sm); }
+  .reveal-img > img { width: 100%; height: 100%; object-fit: cover; will-change: transform, clip-path; }
+  .arrive-photo img { filter: saturate(.6) sepia(.22) contrast(1.05); }
+  .photo-note { font-size: 14px; color: var(--stone); margin-top: 8px; }
+  @media (min-width: 900px) {
+    .arrive { padding-top: 128px; padding-bottom: 160px; }
+    .arrive-text { grid-column: 1 / span 8; }
+    .arrive-photo { grid-column: 3 / -1; grid-row: 2; margin-top: 48px; }
+    .arrive-photo .photo-note { text-align: right; }
+    .arrive-photo .reveal-img { aspect-ratio: 16 / 9; }
+    .arrive-salt { display: block; grid-column: 10 / -1; grid-row: 1; align-self: start; margin-top: 16px; position: relative; z-index: 2; }
+    .arrive-salt .box { overflow: hidden; aspect-ratio: 4 / 5; border-radius: var(--r-sm); position: relative; background: var(--char); }
+    .arrive-salt img { position: absolute; inset: -12% 0; width: 100%; height: 124%; object-fit: cover; will-change: transform; }
+
+  }
+
+  /* Dishes scene */
+  .dishes { position: relative; background: var(--salt); }
+  .dishes .stage { background: var(--char); color: var(--salt); }
+  .dish { display: grid; gap: 24px; padding: 64px var(--gutter); border-top: 1px solid rgba(237,232,220,.18); }
+  .dish-title { font-size: clamp(2.75rem, 10vw, 11rem); }
+  .dish-body { display: grid; gap: 24px; }
+  .dish-img { overflow: hidden; border-radius: var(--r-sm); aspect-ratio: 16 / 10; background: var(--ash); }
+  .dish-img img { width: 100%; height: 100%; object-fit: cover; will-change: transform, clip-path; }
+  .dish-meta { display: grid; gap: 12px; align-content: end; }
+  .dish-meta .num { font-family: var(--display); font-size: 1.5rem; color: var(--smoke); }
+  .dish-meta p { max-width: 20ch; font-family: var(--display); font-size: clamp(1.5rem, 2.6vw, 2.75rem); line-height: 1.08; letter-spacing: -.02em; }
+  .dish-meta .tag { font-size: 14px; color: var(--smoke); }
+  .rail { display: none; }
+  .scene-head { display: none; }
+
+  .dishes.is-pinned { height: 460vh; }
+  .dishes.is-pinned .stage { position: sticky; top: 0; height: 100svh; overflow: hidden; will-change: clip-path; }
+  .dishes.is-pinned .scene-head { display: block; position: absolute; top: 88px; left: var(--gutter); z-index: 3; }
+  .dishes.is-pinned .dish { position: absolute; inset: 0; padding: 120px var(--gutter) 32px 56px; border: 0; align-content: center; gap: 16px; }
+  .dishes.is-pinned .dish-body { grid-template-columns: 1fr; }
+  .dishes.is-pinned .dish-img { height: 34svh; aspect-ratio: auto; order: -1; }
+  .dishes.is-pinned .rail { display: block; position: absolute; left: 24px; top: 120px; bottom: 32px; width: 2px; background: rgba(237,232,220,.2); z-index: 3; }
+  .dishes.is-pinned .rail i { position: absolute; inset: 0; background: var(--ember); transform-origin: 50% 0; transform: scaleY(0); }
+  @media (min-width: 768px) {
+    .dishes.is-pinned .dish { padding: 112px var(--gutter) 40px 96px; gap: 24px; }
+    .dishes.is-pinned .dish-body { grid-template-columns: 4fr 8fr; gap: 32px; }
+    .dishes.is-pinned .dish-img { height: 50svh; order: 0; }
+    .dishes.is-pinned .dish-title { font-size: min(10vw, 19svh); }
+    .dishes.is-pinned .rail { left: 48px; }
+    .dishes.is-pinned .scene-head { left: 96px; }
+  }
+  @media (max-width: 767px) {
+    .dishes.is-pinned { height: 400vh; }
+    .dishes.is-pinned .dish-title { font-size: min(14vw, 11svh); }
+    .dishes.is-pinned .dish-meta p { font-size: 1.25rem; }
+  }
+
+  /* Marquee */
+  .marquee-band { background: var(--char); color: var(--salt); border-top: 1px solid rgba(237,232,220,.18); border-bottom: 1px solid rgba(237,232,220,.18); padding: 24px 0; overflow: hidden; white-space: nowrap; }
+  .marquee-band .marquee { display: flex; overflow: hidden; }
+  .marquee > div { display: inline-flex; align-items: center; gap: 48px; padding-right: 48px; will-change: transform; flex: none; font-family: var(--display); font-size: clamp(3rem, 8vw, 8rem); letter-spacing: -.03em; line-height: 1.05; }
+  .marquee svg { width: .55em; height: .55em; stroke-width: 1.5; color: var(--ember); flex: none; }
+
+  /* Forty */
+  .forty { padding-top: 96px; padding-bottom: 128px; overflow: hidden; }
+  .forty-row { display: grid; gap: 24px; margin-top: 16px; align-items: end; }
+  .forty-num {
+    font-family: var(--display); font-size: clamp(9rem, 40vw, 44rem); line-height: .8; letter-spacing: -.05em; margin-left: -.04em;
+    color: var(--char);
+  }
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .forty-num {
+      background-image: url("https://images.unsplash.com/photo-1706011465964-7a226eea129a?w=1800&q=80&auto=format&fit=crop");
+      background-size: cover; background-position: 50% 45%; -webkit-background-clip: text; background-clip: text;
+      color: transparent; -webkit-text-stroke: 2px var(--char);
+    }
+  }
+  .forty-copy { display: grid; gap: 16px; max-width: 30rem; }
+  .forty-copy h3 { font-size: clamp(2rem, 4vw, 3.75rem); }
+  .seats { display: grid; grid-template-columns: repeat(10, 1fr); gap: 8px; margin-top: 48px; max-width: 28rem; }
+  .seats i { aspect-ratio: 1; border-radius: 50%; border: 2px solid var(--char); background: var(--ember); transform: scale(1); transition: background-color .35s ease, transform .5s var(--ease), border-color .35s ease; }
+  .seats i:not(.lit) { background: transparent; transform: scale(.7); border-color: var(--brine); }
+  .seats-cap { margin-top: 16px; font-size: 14px; color: var(--stone); }
+  @media (min-width: 900px) {
+    .forty { padding-top: 128px; padding-bottom: 160px; }
+    .forty-row { grid-template-columns: auto 1fr; gap: 48px; }
+    .forty-copy { padding-bottom: 5vw; }
+  }
+
+  /* Hours */
+  .hours { background: var(--ash); color: var(--salt); padding-top: 96px; padding-bottom: 128px; overflow: hidden; }
+  .hours > * { position: relative; z-index: 2; }
+  .hours h2 { font-size: clamp(2.75rem, 8vw, 8.5rem); margin: 16px 0 48px; max-width: 12ch; }
+  .week { display: grid; gap: 12px; }
+  .day { display: grid; grid-template-columns: 7.5rem 1fr; gap: 16px; align-items: stretch; border-top: 1px solid rgba(237,232,220,.2); padding-top: 12px; }
+  .day h3 { font-family: var(--display); font-size: 1.5rem; letter-spacing: -.02em; line-height: 1.2; align-self: center; font-weight: 400; }
+  .slots { display: flex; gap: 8px; flex-wrap: wrap; }
+  .slot { position: relative; min-width: 8rem; flex: 1; min-height: 64px; display: flex; align-items: center; padding: 0 16px; border-radius: var(--r-sm); font-weight: 700; overflow: hidden; border: 1px solid var(--salt); }
+  .slot .fill { position: absolute; inset: 0; transform-origin: 50% 100%; }
+  .slot span { position: relative; z-index: 1; }
+  .slot.lunch .fill { background: transparent; }
+  .slot.dinner { border-color: var(--ember); }
+  .slot.dinner .fill { background: var(--ember); }
+  .slot.dinner span { color: var(--char); }
+  .day.closed h3, .day.closed .closed-note { color: var(--smoke); }
+  .closed-note { align-self: center; font-weight: 500; }
+  .hours-note { margin-top: 32px; max-width: 38rem; color: var(--smoke); border: 2px dashed rgba(169,161,149,.6); border-radius: var(--r-sm); padding: 16px 24px; }
+  @media (min-width: 900px) {
+    .hours { padding-top: 128px; padding-bottom: 160px; }
+    .week { grid-template-columns: repeat(7, 1fr); gap: 16px; }
+    .day { grid-template-columns: 1fr; align-content: start; gap: 16px; padding-top: 16px; }
+    .slots { flex-direction: column; }
+    .slot { min-height: 168px; align-items: flex-end; padding: 16px; flex: none; min-width: 0; }
+    .slot.lunch { min-height: 120px; }
+    .closed-note { align-self: start; }
+  }
+
+  /* Close */
+  .close { position: relative; isolation: isolate; overflow: hidden; background: var(--char); padding-top: 128px; padding-bottom: 48px; }
+  .close-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -3; }
+  .close-shade { position: absolute; inset: 0; z-index: -2; background: linear-gradient(180deg, var(--char) 0%, rgba(18,16,14,.86) 25%, rgba(18,16,14,.88) 70%, var(--char) 100%); }
+  .close > .wrap, .close > footer { position: relative; z-index: 2; }
+  .close-title { font-size: clamp(4rem, 17vw, 22rem); margin: 16px 0 24px; }
+  .phone-big { display: inline-block; font-family: var(--display); font-size: clamp(2.5rem, 11.5vw, 14rem); letter-spacing: -.04em; line-height: 1; text-decoration: none; color: var(--ember); white-space: nowrap; will-change: transform; padding: 8px 0; }
+  .phone-big:hover { color: var(--ember-hi); }
+  .phone-big:focus-visible { outline-offset: 8px; }
+  .close-grid { display: grid; gap: 48px; margin-top: 64px; }
+  .contact-list { display: grid; gap: 24px; align-content: start; }
+  .contact-list li { display: grid; grid-template-columns: 24px 1fr; gap: 12px; align-items: start; font-size: 1.1875rem; }
+  .contact-list svg { width: 20px; height: 20px; stroke-width: 1.75; margin-top: 4px; color: var(--smoke); }
+  .contact-list small { display: block; font-size: 14px; color: var(--smoke); letter-spacing: .1em; text-transform: uppercase; font-weight: 700; margin-bottom: 4px; }
+  .contact-list a { text-decoration-thickness: 1px; text-underline-offset: 4px; overflow-wrap: anywhere; }
+
+  .form { display: grid; gap: 16px; background: rgba(18,16,14,.72); border: 1px solid rgba(237,232,220,.25); border-radius: var(--r-lg); padding: 24px; max-width: 40rem; }
+  .form h3 { font-family: var(--display); font-size: 1.875rem; letter-spacing: -.02em; font-weight: 400; line-height: 1.1; }
+  .fields { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
+  .field { display: grid; gap: 8px; }
+  .field.wide { grid-column: 1 / -1; }
+  .field label { font-weight: 700; font-size: 15px; }
+  .field input, .field select, .field textarea {
+    font: 500 1rem/1.4 var(--text); color: var(--salt); background: var(--ash); border: 1px solid var(--smoke); border-radius: var(--r-sm);
+    min-height: 48px; padding: 10px 12px; width: 100%; box-sizing: border-box; color-scheme: dark;
+  }
+  .field textarea { min-height: 96px; resize: vertical; }
+  .field input:hover, .field select:hover, .field textarea:hover { border-color: var(--salt); }
+  .field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible { outline: 3px solid var(--ember); outline-offset: 2px; border-color: var(--salt); }
+  .form-note { font-size: 14px; color: var(--smoke); }
+  .err { display: none; font-size: 14px; color: var(--salt); }
+  .field.bad .err { display: block; }
+  .field.bad input { border-color: var(--ember); border-width: 2px; }
+  .form .btn { width: 100%; }
+  @media (min-width: 900px) {
+    .close { padding-top: 160px; padding-bottom: 48px; }
+    .close-grid { grid-template-columns: 1fr 1.2fr; gap: 96px; margin-top: 96px; align-items: start; }
+  }
+
+  .foot { margin-top: 96px; padding-top: 24px; padding-bottom: 8px; border-top: 1px solid rgba(237,232,220,.25); display: grid; gap: 12px; font-size: 14px; color: var(--smoke); }
+  .foot b { color: var(--salt); font-family: var(--display); font-weight: 400; font-size: 1.25rem; letter-spacing: -.02em; }
+  .foot p { max-width: 46rem; }
+  .to-top { color: var(--salt); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sparks { display: none; }
+    .seats i { transition: none; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#book">Skip to booking</a>
+<div class="progress" data-progress aria-hidden="true"></div>
+<div class="cursor" data-cursor aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#top" aria-label="Ember and Salt, back to top">Ember &amp; Salt</a>
+  <nav class="nav-links" aria-label="Main">
+    <a class="link" href="#fire">The fire</a>
+    <a class="link" href="#seats">The room</a>
+    <a class="link" href="#hours">Hours</a>
+    <a class="link" href="#book">Find us</a>
+  </nav>
+</header>
+<div class="nav-right">
+    <a class="btn btn-primary" href="tel:0400111222"><i data-lucide="phone" aria-hidden="true"></i><span>0400 111 222</span></a>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menu-panel" data-menu>
+      <i data-lucide="menu" class="i-open" aria-hidden="true"></i><i data-lucide="x" class="i-close" aria-hidden="true"></i>
+    </button>
+  </div>
+<nav class="menu-panel" id="menu-panel" aria-label="Menu">
+  <a href="#fire">The fire</a>
+  <a href="#seats">The room</a>
+  <a href="#hours">Hours</a>
+  <a href="#book">Find us</a>
+</nav>
+
+<main id="top">
+
+  <!-- 1. Opening: the fire, full screen -->
+  <section class="hero dark" data-glow data-hero aria-label="Ember and Salt">
+    <video class="hero-video" data-hero-video autoplay muted loop playsinline preload="auto" width="1280" height="720"
+           poster="https://images.pexels.com/videos/37294884/pexels-photo-37294884.jpeg?auto=compress&cs=tinysrgb&w=1600"
+           aria-hidden="true">
+      <source src="https://videos.pexels.com/video-files/37294884/15798093_1280_720_25fps.mp4" type="video/mp4">
+    </video>
+    <div class="hero-shade"></div>
+    <canvas class="sparks" data-sparks aria-hidden="true"></canvas>
+
+    <div class="hero-inner" style="position:relative;z-index:2">
+      <p class="label hero-eyebrow" data-load>Wood-fire restaurant &middot; 3 Quay Lane, Marrowick</p>
+      <h1 class="display hero-title" aria-label="Ember and Salt">
+        <span class="line" data-hline><span>Ember</span></span>
+        <span class="line" data-hline><span>&amp; Salt</span></span>
+      </h1>
+      <div class="hero-foot">
+        <p class="hero-lede" data-load>Whole fish, lamb shoulder, flatbreads, charred vegetables. Every dish is cooked over a wood fire.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="tel:0400111222" data-magnetic><i data-lucide="phone" aria-hidden="true"></i>Call 0400 111 222</a>
+          <a class="btn btn-ghost" href="#book">Email for a table<i data-lucide="arrow-right" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-strip" style="position:relative;z-index:2" data-load>
+      <span>Dinner Wed to Sun</span><span>Lunch Sat and Sun</span><span>40 seats</span><span>Open kitchen</span>
+    </div>
+  </section>
+
+  <!-- 2. The menu changes with the boats and farms -->
+  <section class="arrive on-salt" id="menu" aria-labelledby="arrive-h">
+    <div class="wrap">
+      <div class="arrive-grid">
+        <div class="arrive-text">
+          <p class="label">The menu</p>
+          <h2 class="display arrive-h" id="arrive-h" data-lines>The boats come in. The fire is already lit.</h2>
+          <p class="lede" data-reveal>The menu is short, and it changes with what the boats and farms bring in. What stays the same is the fire: everything is cooked over wood.</p>
+          <div class="menu-ph" data-reveal>
+            <strong>Menu and prices: to be supplied</strong>
+            <span>The restaurant has not sent its menu or prices yet, so none are shown here. Ask when you call or email.</span>
+          </div>
+        </div>
+        <figure class="arrive-photo">
+          <div class="reveal-img" data-reveal-img>
+            <img src="https://images.unsplash.com/photo-1635536841217-e491f66625f0?w=1800&q=80&auto=format&fit=crop" width="1800" height="1013" loading="lazy"
+                 alt="Small fishing boats moored in a harbour beside a stone quay">
+          </div>
+          <figcaption class="photo-note">Stand-in photograph. To be replaced with the restaurant's own.</figcaption>
+        </figure>
+        <figure class="arrive-salt">
+          <div class="box" data-parallax>
+            <img src="https://images.unsplash.com/photo-1763974463967-647601c65961?w=1400&q=80&auto=format&fit=crop" width="1400" height="895" loading="lazy"
+                 alt="Coarse sea salt heaped on four spoons on a dark surface">
+          </div>
+          <figcaption class="photo-note">Stand-in photograph.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Centrepiece: four things, one fire (pinned) -->
+  <section class="dishes" id="fire" data-dishes aria-labelledby="fire-h">
+    <div class="stage" data-stage>
+      <div class="scene-head"><h2 class="label" id="fire-h" style="color:var(--smoke)">Four things, one fire</h2></div>
+      <div class="rail" aria-hidden="true"><i data-rail-fill></i></div>
+
+      <article class="dish">
+        <h3 class="display dish-title"><span class="line"><span>Whole fish</span></span></h3>
+        <div class="dish-body">
+          <div class="dish-meta">
+            <span class="num"><span data-count>01</span> / 04</span>
+            <p>Whatever the boats bring in.</p>
+            <span class="tag">Stand-in photograph</span>
+          </div>
+          <div class="dish-img"><img src="https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?w=1400&q=80&auto=format&fit=crop" width="1400" height="933" loading="lazy" alt="A whole fish grilled until charred, lying on a banana leaf"></div>
+        </div>
+      </article>
+
+      <article class="dish">
+        <h3 class="display dish-title"><span class="line"><span>Lamb shoulder</span></span></h3>
+        <div class="dish-body">
+          <div class="dish-meta">
+            <span class="num">02 / 04</span>
+            <p>Over the wood, like everything here.</p>
+            <span class="tag">Stand-in photograph</span>
+          </div>
+          <div class="dish-img"><img src="https://images.unsplash.com/photo-1654605137918-db9d2df8bf57?w=1400&q=80&auto=format&fit=crop" width="1400" height="933" loading="lazy" alt="A large joint of lamb roasting on a spit, browned and glistening"></div>
+        </div>
+      </article>
+
+      <article class="dish">
+        <h3 class="display dish-title"><span class="line"><span>Flatbreads</span></span></h3>
+        <div class="dish-body">
+          <div class="dish-meta">
+            <span class="num">03 / 04</span>
+            <p>Ask what is on them tonight.</p>
+            <span class="tag">Stand-in photograph</span>
+          </div>
+          <div class="dish-img"><img src="https://images.unsplash.com/photo-1640625314547-aee9a7696589?w=1400&q=80&auto=format&fit=crop" width="1400" height="1867" loading="lazy" alt="A stack of flatbreads with dark char marks from the heat" style="object-position:50% 55%"></div>
+        </div>
+      </article>
+
+      <article class="dish">
+        <h3 class="display dish-title"><span class="line"><span>Charred vegetables</span></span></h3>
+        <div class="dish-body">
+          <div class="dish-meta">
+            <span class="num">04 / 04</span>
+            <p>Whatever the farms bring in.</p>
+            <span class="tag">Stand-in photograph</span>
+          </div>
+          <div class="dish-img"><img src="https://images.unsplash.com/photo-1674939852424-1e75f40675af?w=1400&q=80&auto=format&fit=crop" width="1400" height="2100" loading="lazy" alt="Tomatoes and onion halves blackened on a grill" style="object-position:50% 60%"></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 4. Marquee: the brief's own words -->
+  <div class="marquee-band" aria-hidden="true">
+    <div class="marquee" data-marquee>
+      <div>
+        <span>Whole fish</span><i data-lucide="flame"></i>
+        <span>Lamb shoulder</span><i data-lucide="flame"></i>
+        <span>Flatbreads</span><i data-lucide="flame"></i>
+        <span>Charred vegetables</span><i data-lucide="flame"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. The room: forty seats -->
+  <section class="forty on-salt" id="seats" data-forty aria-labelledby="forty-h">
+    <div class="wrap">
+      <p class="label">The room</p>
+      <div class="forty-row">
+        <h2 class="forty-num" id="forty-h" data-reveal>40<span class="sr-only"> seats</span></h2>
+        <div class="forty-copy">
+          <h3 class="display" data-reveal>seats around an open kitchen.</h3>
+          <p class="lede" data-reveal>Sit where you can see the fire. Forty seats is small on purpose, so it is worth booking.</p>
+        </div>
+      </div>
+      <div class="seats" aria-hidden="true" data-seats></div>
+      <p class="seats-cap">Forty seats, lighting up as you scroll.</p>
+    </div>
+  </section>
+
+  <!-- 6. Hours -->
+  <section class="hours dark" id="hours" data-glow aria-labelledby="hours-h">
+    <div class="wrap">
+      <p class="label dim">When the fire is lit</p>
+      <h2 class="display" id="hours-h" data-lines>Dinner five nights. Lunch on the weekend.</h2>
+      <div class="week" data-week>
+        <div class="day closed"><h3>Mon</h3><p class="closed-note">Closed</p></div>
+        <div class="day closed"><h3>Tue</h3><p class="closed-note">Closed</p></div>
+        <div class="day"><h3>Wed</h3><div class="slots"><div class="slot dinner"><i class="fill"></i><span>Dinner</span></div></div></div>
+        <div class="day"><h3>Thu</h3><div class="slots"><div class="slot dinner"><i class="fill"></i><span>Dinner</span></div></div></div>
+        <div class="day"><h3>Fri</h3><div class="slots"><div class="slot dinner"><i class="fill"></i><span>Dinner</span></div></div></div>
+        <div class="day"><h3>Sat</h3><div class="slots"><div class="slot lunch"><i class="fill"></i><span>Lunch</span></div><div class="slot dinner"><i class="fill"></i><span>Dinner</span></div></div></div>
+        <div class="day"><h3>Sun</h3><div class="slots"><div class="slot lunch"><i class="fill"></i><span>Lunch</span></div><div class="slot dinner"><i class="fill"></i><span>Dinner</span></div></div></div>
+      </div>
+      <p class="hours-note">Opening and last-seating times: to be supplied by the restaurant. Call or email to check before you come.</p>
+    </div>
+  </section>
+
+  <!-- 7. Ending: book -->
+  <section class="close dark" id="book" data-glow aria-labelledby="book-h">
+    <video class="close-video" data-lazy-video muted loop playsinline preload="none" width="1280" height="720"
+           poster="https://images.pexels.com/videos/5305345/braai-burning-fire-burning-firewood-campfire-5305345.jpeg?auto=compress&cs=tinysrgb&w=1600" aria-hidden="true">
+      <source data-src="https://videos.pexels.com/video-files/5305345/5305345-hd_1280_720_30fps.mp4" type="video/mp4">
+    </video>
+    <div class="close-shade"></div>
+    <div class="wrap">
+      <p class="label dim">Book a table, by phone or email</p>
+      <h2 class="display close-title" id="book-h" data-lines>Come hungry.</h2>
+      <a class="phone-big" href="tel:0400111222" data-magnetic aria-label="Call 0400 111 222">0400 111 222</a>
+
+      <div class="close-grid">
+        <ul class="contact-list">
+          <li><i data-lucide="mail" aria-hidden="true"></i><div><small>Email</small><a class="link" href="mailto:table@emberandsalt.example">table@emberandsalt.example</a></div></li>
+          <li><i data-lucide="map-pin" aria-hidden="true"></i><div><small>Find us</small>3 Quay Lane, Marrowick</div></li>
+          <li><i data-lucide="clock" aria-hidden="true"></i><div><small>Open</small>Dinner Wednesday to Sunday<br>Lunch Saturday and Sunday</div></li>
+        </ul>
+
+        <form class="form" data-form novalidate aria-labelledby="form-h">
+          <h3 id="form-h">Request a table by email</h3>
+          <div class="fields">
+            <div class="field wide"><label for="f-name">Your name</label><input id="f-name" name="name" type="text" autocomplete="name" required><span class="err" id="e-name">Please add your name.</span></div>
+            <div class="field"><label for="f-date">Day</label><input id="f-date" name="date" type="date" required><span class="err" id="e-date">Please choose a day.</span></div>
+            <div class="field"><label for="f-guests">Guests</label><input id="f-guests" name="guests" type="number" min="1" max="40" inputmode="numeric" required><span class="err" id="e-guests">Please add the number of guests.</span></div>
+            <div class="field wide"><label for="f-sitting">Lunch or dinner</label>
+              <select id="f-sitting" name="sitting"><option>Dinner</option><option>Lunch (Saturday or Sunday)</option></select></div>
+            <div class="field wide"><label for="f-note">Anything we should know (optional)</label><textarea id="f-note" name="note"></textarea></div>
+          </div>
+          <button class="btn btn-primary" type="submit" data-magnetic><i data-lucide="mail" aria-hidden="true"></i>Email this request</button>
+          <p class="form-note">This opens your email app with the request written out. It is not a booking until the restaurant replies.</p>
+        </form>
+      </div>
+
+      <footer class="foot">
+        <b>Ember &amp; Salt</b>
+        <p>3 Quay Lane, Marrowick &middot; <a href="tel:0400111222">0400 111 222</a> &middot; <a href="mailto:table@emberandsalt.example">table@emberandsalt.example</a></p>
+        <p>Photographs and footage on this page are stand-ins from Unsplash and Pexels, to be replaced with the restaurant's own. Ember &amp; Salt and Marrowick are invented for this example.</p>
+        <p><a class="to-top link" href="#top">Back to the fire</a></p>
+      </footer>
+    </div>
+  </section>
+</main>
+
+<script type="module">
+import { animate, scroll, inView, stagger, hover, press } from "https://cdn.jsdelivr.net/npm/motion@14/+esm";
+import Lenis from "https://cdn.jsdelivr.net/npm/lenis@1/+esm";
+
+const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+const EASE = [0.16, 1, 0.3, 1];
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+// Icons first, so the marquee clone carries them
+if (window.lucide) window.lucide.createIcons();
+
+/* ---------- Things that work with or without motion ---------- */
+
+// Mobile menu
+const nav = $("#nav"), menuBtn = $("[data-menu]");
+menuBtn.addEventListener("click", () => {
+  const open = document.body.classList.toggle("menu-open");
+  menuBtn.setAttribute("aria-expanded", String(open));
+});
+$$("#menu-panel a").forEach((a) => a.addEventListener("click", () => { document.body.classList.remove("menu-open"); menuBtn.setAttribute("aria-expanded", "false"); }));
+
+// Seats: forty dots (all lit until motion takes over)
+const seatsBox = $("[data-seats]");
+for (let i = 0; i < 40; i++) { const d = document.createElement("i"); d.className = "lit"; seatsBox.appendChild(d); }
+const seats = $$("i", seatsBox);
+
+// Booking form builds a mailto: link
+const form = $("[data-form]");
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  let ok = true;
+  [["f-name", "e-name"], ["f-date", "e-date"], ["f-guests", "e-guests"]].forEach(([f, er]) => {
+    const input = document.getElementById(f);
+    const bad = !input.value.trim() || !input.checkValidity();
+    input.closest(".field").classList.toggle("bad", bad);
+    input.setAttribute("aria-invalid", String(bad));
+    if (bad) { input.setAttribute("aria-describedby", er); ok = false; } else input.removeAttribute("aria-describedby");
+  });
+  if (!ok) { form.querySelector(".bad input").focus(); return; }
+  const v = Object.fromEntries(new FormData(form));
+  const body = [
+    "Hello Ember & Salt,", "",
+    "I would like to request a table.", "",
+    `Name: ${v.name}`, `Day: ${v.date}`, `Sitting: ${v.sitting}`, `Guests: ${v.guests}`,
+    v.note ? `Note: ${v.note}` : "", "", "Please let me know if this works.",
+  ].filter((l, i, a) => !(l === "" && a[i - 1] === "")).join("\n");
+  window.location.href = `mailto:table@emberandsalt.example?subject=${encodeURIComponent("Table request: " + v.name + ", " + v.guests + " guests")}&body=${encodeURIComponent(body)}`;
+});
+
+// Closing video loads only when it is near
+const lazyVideo = $("[data-lazy-video]");
+if (lazyVideo && "IntersectionObserver" in window) {
+  new IntersectionObserver((entries, obs) => {
+    entries.forEach((en) => {
+      if (!en.isIntersecting) return;
+      const s = $("source[data-src]", lazyVideo);
+      if (s) { s.src = s.dataset.src; lazyVideo.load(); }
+      if (!reduce) lazyVideo.play().catch(() => {});
+      obs.disconnect();
+    });
+  }, { rootMargin: "100% 0px" }).observe(lazyVideo);
+}
+
+// Pointer heat on dark sections
+if (fine) {
+  $$("[data-glow]").forEach((sec) => {
+    sec.addEventListener("pointermove", (e) => {
+      const r = sec.getBoundingClientRect();
+      sec.style.setProperty("--mx", (e.clientX - r.left) + "px");
+      sec.style.setProperty("--my", (e.clientY - r.top) + "px");
+    });
+  });
+}
+
+if (reduce) {
+  $$("[data-hero-video]").forEach((v) => { v.removeAttribute("autoplay"); v.pause(); });
+}
+
+/* ---------- Motion ---------- */
+if (!reduce) {
+  new Lenis({ autoRaf: true });
+
+  // Progress bar
+  scroll(animate("[data-progress]", { transform: ["scaleX(0)", "scaleX(1)"] }, { ease: "linear" }));
+
+  /* 1. Opening: headline rises line by line, supporting pieces follow */
+  const hlines = $$("[data-hline] > span");
+  hlines.forEach((l) => (l.style.transform = "translateY(110%)"));
+  $$("[data-load]").forEach((el) => (el.style.opacity = "0"));
+  const open = () => {
+    animate(hlines, { transform: ["translateY(110%)", "translateY(0%)"] }, { duration: 1.1, ease: EASE, delay: stagger(0.12) });
+    animate("[data-load]", { opacity: [0, 1], transform: ["translateY(16px)", "translateY(0px)"] },
+      { duration: 0.8, ease: EASE, delay: stagger(0.1, { startDelay: 0.55 }) });
+  };
+  document.fonts.ready.then(open);
+  setTimeout(() => { // never leave anything hidden
+    $$("[data-load]").forEach((el) => { if (el.style.opacity === "0") el.style.opacity = "1"; });
+    hlines.forEach((l) => { if (l.style.transform === "translateY(110%)") l.style.transform = "translateY(0%)"; });
+  }, 3500);
+
+  // Hero video drifts and swells as you leave
+  const hero = $("[data-hero]");
+  scroll(animate($("[data-hero-video]"), { transform: ["scale(1) translateY(0%)", "scale(1.18) translateY(9%)"] }, { ease: "linear" }),
+    { target: hero, offset: ["start start", "end start"] });
+
+  /* Sparks over the hero */
+  const cv = $("[data-sparks]");
+  if (cv) {
+    const ctx = cv.getContext("2d");
+    let W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 2), running = true;
+    const N = window.innerWidth < 768 ? 28 : 64;
+    const cols = ["#F2541B", "#FF8A4C", "#FFC08A"];
+    const size = () => { W = cv.clientWidth; H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
+    size(); addEventListener("resize", size);
+    const mk = (init) => ({ x: Math.random() * W, y: init ? Math.random() * H : H + 10, r: 0.6 + Math.random() * 2, v: 0.35 + Math.random() * 1.1, s: Math.random() * 6.28, a: 0.35 + Math.random() * 0.65, c: cols[(Math.random() * 3) | 0] });
+    const ps = Array.from({ length: N }, () => mk(true));
+    const tick = () => {
+      if (running) {
+        ctx.clearRect(0, 0, W, H);
+        ctx.globalCompositeOperation = "lighter";
+        for (const p of ps) {
+          p.y -= p.v; p.s += 0.02; p.x += Math.sin(p.s) * 0.35 + 0.12;
+          const life = p.y / H;
+          if (p.y < -10) Object.assign(p, mk(false));
+          ctx.globalAlpha = p.a * Math.min(1, life * 1.6);
+          ctx.fillStyle = p.c; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.28); ctx.fill();
+        }
+      }
+      requestAnimationFrame(tick);
+    };
+    new IntersectionObserver(([e]) => (running = e.isIntersecting)).observe(hero);
+    tick();
+  }
+
+  /* Rising lines for large headings (not the hero) */
+  function splitLines(el) {
+    const words = el.textContent.trim().split(/\s+/);
+    el.textContent = "";
+    const spans = words.map((w) => {
+      const s = document.createElement("span");
+      s.textContent = w + " "; s.style.display = "inline-block"; s.style.whiteSpace = "pre";
+      el.appendChild(s); return s;
+    });
+    const rows = []; let top = null;
+    spans.forEach((s) => { if (s.offsetTop !== top) { rows.push([]); top = s.offsetTop; } rows[rows.length - 1].push(s.textContent); });
+    el.textContent = "";
+    el.setAttribute("aria-label", words.join(" "));
+    return rows.map((r) => {
+      const line = document.createElement("span");
+      line.className = "line"; line.setAttribute("aria-hidden", "true");
+      const inner = document.createElement("span");
+      inner.textContent = r.join("").trimEnd();
+      line.appendChild(inner); el.appendChild(line); return inner;
+    });
+  }
+  document.fonts.ready.then(() => {
+    $$("[data-lines]").forEach((el) => {
+      const lines = splitLines(el);
+      lines.forEach((l) => (l.style.transform = "translateY(110%)"));
+      inView(el, () => {
+        animate(lines, { transform: ["translateY(110%)", "translateY(0%)"] }, { duration: 1, ease: EASE, delay: stagger(0.09) });
+      }, { amount: 0.4 });
+    });
+  });
+
+  /* 2. Image wipe (harbour) */
+  $$("[data-reveal-img]").forEach((box) => {
+    const img = box.firstElementChild;
+    img.style.clipPath = "inset(0 100% 0 0)";
+    inView(box, () => {
+      animate(img, { clipPath: ["inset(0 100% 0 0)", "inset(0 0% 0 0)"], transform: ["scale(1.2)", "scale(1)"] }, { duration: 1.3, ease: EASE });
+    }, { amount: 0.25 });
+  });
+
+  /* Plain reveals, used sparingly */
+  $$("[data-reveal]").forEach((el) => {
+    el.style.opacity = "0";
+    inView(el, () => {
+      animate(el, { opacity: [0, 1], transform: ["translateY(24px)", "translateY(0px)"] }, { duration: 0.8, ease: EASE });
+    }, { amount: 0.25 });
+  });
+
+  /* Parallax (salt spoons) */
+  $$("[data-parallax]").forEach((box) => {
+    scroll(animate(box.firstElementChild, { transform: ["translateY(-9%)", "translateY(9%)"] }, { ease: "linear" }),
+      { target: box, offset: ["start end", "end start"] });
+  });
+
+  /* 3. Centrepiece: the iris opens, then four dishes replace each other */
+  const scene = $("[data-dishes]");
+  if (scene) {
+    scene.classList.add("is-pinned");
+    const stage = $("[data-stage]", scene);
+    const items = $$(".dish", scene);
+    const fill = $("[data-rail-fill]", scene);
+    const counter = $("[data-count]", scene);
+    items.forEach((it, i) => { it.style.opacity = i === 0 ? "1" : "0"; it.style.zIndex = i === 0 ? "2" : "1"; it.style.pointerEvents = i === 0 ? "auto" : "none"; });
+
+    // Fire opens like a door from the salt-white page
+    stage.style.clipPath = "circle(0% at 50% 60%)";
+    scroll(animate(stage, { clipPath: ["circle(0% at 50% 60%)", "circle(150% at 50% 60%)"] }, { ease: "linear" }),
+      { target: scene, offset: ["start end", "start start"] });
+
+    const pad = (n) => String(n).padStart(2, "0");
+    let current = 0;
+    const show = (next) => {
+      if (next === current) return;
+      const prev = items[current]; current = next;
+      prev.style.pointerEvents = "none"; prev.style.zIndex = "1";
+      animate(prev, { opacity: 0 }, { duration: 0.35 });
+      const it = items[next];
+      it.style.zIndex = "2"; it.style.pointerEvents = "auto"; it.style.opacity = "1";
+      animate($(".dish-title > .line > span", it), { transform: ["translateY(110%)", "translateY(0%)"] }, { duration: 0.95, ease: EASE });
+      animate($(".dish-img img", it), { clipPath: ["inset(0 100% 0 0)", "inset(0 0% 0 0)"], transform: ["scale(1.25)", "scale(1)"] }, { duration: 1.15, ease: EASE });
+      animate($$(".dish-meta > *", it), { opacity: [0, 1], transform: ["translateY(16px)", "translateY(0px)"] }, { duration: 0.7, ease: EASE, delay: stagger(0.08, { startDelay: 0.25 }) });
+    };
+    scroll((p) => {
+      show(Math.min(items.length - 1, Math.floor(p * items.length)));
+      fill.style.transform = `scaleY(${p})`;
+    }, { target: scene, offset: ["start start", "end end"] });
+  }
+
+  /* Marquee */
+  $$("[data-marquee]").forEach((m) => {
+    const strip = m.firstElementChild;
+    const clone = strip.cloneNode(true);
+    clone.setAttribute("aria-hidden", "true");
+    m.appendChild(clone);
+    animate([strip, clone], { transform: ["translateX(0%)", "translateX(-100%)"] }, { duration: 28, ease: "linear", repeat: Infinity });
+  });
+
+  /* 5. Forty seats light up with scroll */
+  const forty = $("[data-forty]");
+  seats.forEach((s) => s.classList.remove("lit"));
+  scroll((p) => {
+    const n = Math.round(p * seats.length);
+    seats.forEach((s, i) => s.classList.toggle("lit", i < n));
+  }, { target: seatsBox, offset: ["start 0.92", "end 0.5"] });
+
+  /* 6. Hours: blocks rise from the base */
+  const fills = $$("[data-week] .slot .fill");
+  fills.forEach((f) => (f.style.transform = "scaleY(0)"));
+  inView($("[data-week]"), () => {
+    animate(fills, { transform: ["scaleY(0)", "scaleY(1)"] }, { duration: 1, ease: EASE, delay: stagger(0.07) });
+  }, { amount: 0.25 });
+
+  /* Pointer effects */
+  if (fine) {
+    $$("[data-magnetic]").forEach((el) => {
+      el.addEventListener("pointermove", (e) => {
+        const r = el.getBoundingClientRect();
+        const k = el.classList.contains("phone-big") ? 0.08 : 0.3;
+        animate(el, { transform: `translate(${(e.clientX - r.left - r.width / 2) * k}px, ${(e.clientY - r.top - r.height / 2) * k}px)` }, { duration: 0.3, ease: "easeOut" });
+      });
+      el.addEventListener("pointerleave", () => animate(el, { transform: "translate(0px, 0px)" }, { type: "spring", stiffness: 300, damping: 15 }));
+    });
+
+    const cursor = $("[data-cursor]");
+    window.addEventListener("pointermove", (e) => {
+      animate(cursor, { transform: `translate(${e.clientX - 9}px, ${e.clientY - 9}px)` }, { duration: 0.25, ease: "easeOut" });
+    });
+    hover("a, button", () => {
+      animate(cursor, { scale: 3 }, { duration: 0.25 });
+      return () => animate(cursor, { scale: 1 }, { duration: 0.25 });
+    });
+  }
+
+  press("a, button", (el) => {
+    animate(el, { scale: 0.96 }, { duration: 0.12 });
+    return () => animate(el, { scale: 1 }, { duration: 0.2 });
+  });
+}
+</script>
+</body>
+</html>
