@@ -2,6 +2,20 @@
 
 Before you hand the page over, read it as a stranger would. Go through both lists. Fix what you find; do not just note it.
 
+## First: would anyone say wow?
+
+Scroll the page from top to bottom as a visitor.
+
+- Is the first screen a statement, or a headline and two buttons?
+- Can you name three moments where something happens that a visitor would not expect? If not, add them.
+- Is one thing on the page very large?
+- Does each section have a different shape and a different way of arriving?
+- Is there a centrepiece driven by scroll, when the level is full?
+- Does the page end with weight, or does it trail off into a footer?
+- Could this design be reused for a competitor by swapping the name? If yes, the idea is not strong enough yet.
+
+If the honest answer to any of these is no, go back and fix it before continuing. A correct, tidy, forgettable page is a failed build.
+
 ## List one: does it look machine-made?
 
 Each line is something to look for and remove.
@@ -11,7 +25,9 @@ Each line is something to look for and remove.
 - Every section centred, with the same padding and the same shape as the one before.
 - Emoji used as icons or as bullets.
 - Icons on everything, including things that needed no icon.
-- Glass panels, glows, blurred blobs or gradient text with no reason to be there.
+- Glass panels, glows, blurred blobs or gradient text that do not belong to the chosen signature.
+- Every section fading up in the same way.
+- Timid motion: a few pixels of movement that nobody would notice.
 - A row of badges, counters or logos under the headline.
 - Copy that could describe any business: "quality you can trust", "your satisfaction is our priority", "we go above and beyond".
 - More than two typefaces, or a default system font where a chosen face was planned.

@@ -6,12 +6,14 @@ Before building, show the person what you intend to build, in a form they can ju
 
 Keep it short. Use exactly these parts:
 
+- **The idea:** the one-sentence big idea, and which signature it uses (cinematic scroll, bold editorial, dark and vivid, or playful and kinetic).
 - **Style:** one sentence in plain words.
 - **Palette:** each colour with its hex value and its role. Give the role in a few words, such as "headings and footer" or "primary button only".
 - **Type:** the heading face and the text face, and where they come from.
 - **Sections:** the ordered list of sections, one line each, saying what each one is for.
 - **Photos:** the mood in one line: the subject matter, the light, and what to avoid.
-- **Motion:** low, medium or high, as defined in `references/07-motion.md`, and what that means here in one line. The description must match the level: entrances on scroll are medium, not low.
+- **Moments:** the three or more moments the page is built around, one line each: the opening, the centrepiece, the ending.
+- **Motion:** full, medium or quiet, as defined in `references/07-motion.md`. Full is the default.
 - **Left out on purpose:** anything a visitor might expect that you are not including because it was not supplied, such as reviews.
 
 End with one question: **"Build this, or change something?"**

@@ -15,9 +15,9 @@ Stock media stands in for the business's own photos until they supply them. It i
 2. Prefer real working scenes, hands, tools, materials and finished results. Avoid staged shots: models in spotless uniforms giving a thumbs up, handshakes, people pointing at laptops.
 3. Choose a set that belongs together: similar light, similar colour temperature, similar distance. Three photos from three different worlds look like a collage.
 4. Avoid visible brand names, vehicle signage, and identifiable faces. A stranger's face next to "our team" is a false claim.
-5. Use few. One strong hero image and two or three supporting ones do more than ten.
+5. Use media generously and large. A bold page needs a strong hero image or video and enough supporting photographs to carry its scenes: typically five to eight. Choose high resolution and show them big, full-bleed or close to it. Small thumbnails in boxes waste a good photograph.
 6. Check the licence. Some results are paid or members-only images (on Unsplash these are served from a different host than `images.unsplash.com`, or have `premium` in the file name). Do not use them. Do not use 3D renders or illustrations where a photo of real work is meant.
-7. Use video only where movement adds something, usually the hero. Keep it short, silent and optional.
+7. Look for a hero video. A short, silent, looping clip of the work, the material or the place does more for a first impression than any still. Search Pexels for one that fits; if none is good enough, use a photograph.
 
 ## The verification rule
 
