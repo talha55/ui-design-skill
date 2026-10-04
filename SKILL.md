@@ -1,6 +1,6 @@
 ---
 name: ui-design-skill
-description: Plan, design and build a marketing website or landing page for a business, product or person, or redesign one. Use when asked to build, create or redesign a website, homepage or landing page. Agrees a design direction first, uses real verified photos and video, Lucide icons, Motion animation, and never invents facts about the business. Not for dashboards, internal tools or mobile apps.
+description: Plan, design and build a bold, animated marketing website or landing page for a business, product or person, or redesign one. Use when asked to build, create or redesign a website, homepage or landing page, especially when the request asks for something creative, modern, animated, premium or impressive. Commits to one strong art direction, builds choreographed scroll and pointer animation with Motion and Lenis, uses real verified photos and video and Lucide icons, and never invents facts about the business. Not for dashboards, internal tools or mobile apps.
 ---
 
 # UI Design Skill
