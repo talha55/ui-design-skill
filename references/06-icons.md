@@ -26,7 +26,7 @@ import { Phone } from "lucide-react";
 <Phone size={20} strokeWidth={1.75} aria-hidden="true" />
 ```
 
-Use icon names that exist. If you are not certain a name exists, check the Lucide site or choose a common one (`phone`, `mail`, `map-pin`, `clock`, `wrench`, `droplets`, `flame`, `shield-check`, `arrow-right`, `check`, `menu`, `x`).
+Use icon names that exist. If you are not certain a name exists, check the Lucide site or choose a common one (`phone`, `mail`, `map-pin`, `clock`, `calendar`, `arrow-right`, `check`, `menu`, `x`).
 
 ## Using animated icons
 

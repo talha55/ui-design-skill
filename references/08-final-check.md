@@ -39,7 +39,7 @@ None of these may appear unless the business provided them:
 - Suburb or street names, a street address, a map location.
 - Social media links.
 
-Watch for the quiet versions: "trusted by locals", "hundreds of happy customers", "Brackenford's favourite". These are claims too.
+Watch for the quiet versions: "trusted by locals", "hundreds of happy customers", "the town's favourite". These are claims too.
 
 Where the page would be stronger with one of these, put a clearly labelled placeholder in its place, styled so it cannot be mistaken for real content, or leave the section out. Then add it to the handover list.
 

@@ -11,12 +11,13 @@ Stock media stands in for the business's own photos until they supply them. It i
 
 ## Finding the right media
 
-1. Search for the trade plus the photo mood agreed in the direction: "plumber fixing sink", "copper pipes", "gas hob flame", "bathroom renovation tiles".
+1. Search for the trade plus the photo mood agreed in the direction. Search for the work itself, its materials, its tools and its results, in several different phrasings, and look at more than the first few results.
 2. Prefer real working scenes, hands, tools, materials and finished results. Avoid staged shots: models in spotless uniforms giving a thumbs up, handshakes, people pointing at laptops.
 3. Choose a set that belongs together: similar light, similar colour temperature, similar distance. Three photos from three different worlds look like a collage.
 4. Avoid visible brand names, vehicle signage, and identifiable faces. A stranger's face next to "our team" is a false claim.
 5. Use few. One strong hero image and two or three supporting ones do more than ten.
-6. Use video only where movement adds something, usually the hero. Keep it short, silent and optional.
+6. Check the licence. Some results are paid or members-only images (on Unsplash these are served from a different host than `images.unsplash.com`, or have `premium` in the file name). Do not use them. Do not use 3D renders or illustrations where a photo of real work is meant.
+7. Use video only where movement adds something, usually the hero. Keep it short, silent and optional.
 
 ## The verification rule
 
@@ -39,7 +40,7 @@ Use a smaller `w` for small images (800 for cards, 1600 to 2000 for a full-width
 If you have no tool that can reach the source, or a link does not load:
 
 - Do not guess another URL.
-- Put a visible, styled placeholder block in the image's place: a solid surface in a palette neutral with a short label such as "Photo: van and tools, to be supplied".
+- Put a visible, styled placeholder block in the image's place: a solid surface in a palette neutral with a short label that names the photo needed and says it is to be supplied.
 - Add the item to the handover list with a suggested search phrase.
 
 A page with three honest placeholders is finished. A page with three broken images is not.

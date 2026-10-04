@@ -50,7 +50,7 @@ Pick one scale and use only its steps. A workable one: 14, 16, 18, 20, 24, 30, 3
 
 ## Components
 
-- **Buttons:** one primary style, one secondary, one text link. The primary has the accent background and enough padding to look pressable. Label them with the action: "Call 0400 000 000", "Request a quote".
+- **Buttons:** one primary style, one secondary, one text link. The primary has the accent background and enough padding to look pressable. Label them with the action and, for a call button, the number itself.
 - **Cards:** use a card only when the content is a separate object. Do not put cards inside cards. Either a border or a shadow, not both.
 - **Forms:** visible labels above fields, not placeholder-only. Ask for the fewest fields that make the request useful. Say what happens after sending.
 - **Navigation:** the business name, three to five links at most, and the primary action. On mobile keep the action visible and fold the links away.
