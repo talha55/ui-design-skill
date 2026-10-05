@@ -82,3 +82,5 @@ In an existing React or Next.js project, the skill uses the project's own stack.
 ## Licence
 
 MIT. See [LICENSE](LICENSE).
+
+Built by [Talha Muneer](https://www.talhamuneer.com), a full-stack and AI engineer working with agencies and businesses in the United States, the United Kingdom, Australia and Europe. More of his work: [GitHub](https://github.com/talha55) and [case studies](https://github.com/talha55/case-studies).
